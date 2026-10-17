@@ -1,0 +1,48 @@
+name: Import reviewed Klim-Lux v41 source
+
+on:
+  push:
+    branches: [transport/klim-v41-20261017]
+    paths: [.source-transfer/READY]
+
+permissions: {}
+
+concurrency:
+  group: klim-lux-source-import-v41
+  cancel-in-progress: false
+
+jobs:
+  import:
+    if: github.repository == 'Gkolaq/klim-lux' && github.event_name == 'push' && github.ref == 'refs/heads/transport/klim-v41-20261017'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Read this reviewed transport commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git -c core.hooksPath=/dev/null clone --single-branch --branch transport/klim-v41-20261017 https://github.com/Gkolaq/klim-lux.git "$RUNNER_TEMP/klim-transfer"
+          test "$(git -C "$RUNNER_TEMP/klim-transfer" rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Verify archive and import one source commit
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          set -euo pipefail
+          umask 077
+          askpass="$RUNNER_TEMP/klim-git-askpass.sh"
+          cat > "$askpass" <<'ASKPASS'
+          #!/bin/sh
+          case "$1" in
+            *Username*) printf '%s\n' 'x-access-token' ;;
+            *Password*) printf '%s\n' "$GH_TOKEN" ;;
+            *) exit 1 ;;
+          esac
+          ASKPASS
+          chmod 700 "$askpass"
+          export GIT_ASKPASS="$askpass"
+          trap 'rm -f "$askpass"' EXIT
+          python3 "$RUNNER_TEMP/klim-transfer/.source-transfer/import-source.py"
