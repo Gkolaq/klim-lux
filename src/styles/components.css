@@ -1,0 +1,32 @@
+.button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  padding:13px 23px;
+  border:1px solid var(--gold);
+  font-size:13px;
+  font-weight:600;
+  line-height:1.5;
+  transition:background .18s,color .18s;
+  max-width:100%;
+  text-align:center}
+.button-gold {
+  background:var(--gold);
+  color:#151515}
+.button-gold:hover {
+  background:#e9ca92;
+  color:#151515}
+.button-outline {
+  background:transparent;
+  color:var(--text);
+  border-color:var(--line)}
+.button-outline:hover {
+  border-color:var(--gold);
+  color:var(--gold)}
+.text-link {
+  font-size:13px;
+  display:inline-block;
+  padding:9px 0;
+  border-bottom:1px solid var(--gold);
+  color:var(--gold)}

@@ -1,0 +1,138 @@
+{
+  "business": {
+    "owner": "Oleg Klimko",
+    "city": "Warsaw",
+    "hours": "Visits are arranged individually."
+  },
+  "home": {
+    "title": "Your furniture.\nA new chapter.",
+    "lead": "Reupholstery, furniture restoration and made-to-measure covers. I help renew furniture you want to keep. Oleg Klimko’s workshop in Warsaw.",
+    "note": "We choose materials and the scope of work to suit the furniture’s construction, condition and your expectations.",
+    "seoTitle": "Upholstery in Warsaw — furniture restoration and covers | Klim & Co",
+    "seoDescription": "Oleg Klimko’s upholstery workshop in Warsaw. Sofa and armchair reupholstery, furniture repair and made-to-measure covers. Explore our real work."
+  },
+  "pages": [
+    {
+      "slug": "services",
+      "title": "Craftsmanship in every detail.",
+      "lead": "New upholstery, a repaired frame or a fitted cover — we discuss the right solution for your furniture.",
+      "body": "Photographs and dimensions help us assess the task. The final scope depends on the furniture’s condition. We agree on the material, details and sequence of work before starting.",
+      "seoTitle": "Upholstery services in Warsaw — Klim & Co",
+      "seoDescription": "Reupholstery, furniture restoration, fitted covers and work on sofa mechanisms. Explore Oleg Klimko’s workshop services in Warsaw."
+    },
+    {
+      "slug": "materials",
+      "title": "Materials for everyday living.",
+      "lead": "Colour and texture change how furniture looks and feels. Material properties affect comfort, use and care.",
+      "body": "We choose the material together, considering the room’s light, the furniture’s shape and how it is used. Tell us about children or pets. We discuss fabric availability and samples for each project.",
+      "seoTitle": "Upholstery fabrics and materials — Klim & Co",
+      "seoDescription": "Velvet, jacquard, chenille, woven fabrics, leather and faux leather. Choosing upholstery for a sofa, armchair or made-to-measure cover."
+    },
+    {
+      "slug": "workshop",
+      "title": "Behind every piece is a person.",
+      "lead": "My name is Oleg Klimko. I restore upholstered furniture, keeping what matters and changing what needs attention.",
+      "body": "The archive includes sofas, armchairs, removable covers, cushions and other upholstered pieces. These are photographs of real work from different years and locations, including work before Warsaw. They are not visualisations.\n\nWe discuss every project individually. Sometimes new fabric is enough; sometimes the frame or filling needs repair. We start with a conversation and an assessment of the furniture.",
+      "seoTitle": "Oleg Klimko’s upholstery workshop in Warsaw — Klim & Co",
+      "seoDescription": "Meet Oleg Klimko and the Klim & Co workshop in Warsaw. A personal approach to reupholstery, furniture restoration and made-to-measure covers."
+    },
+    {
+      "slug": "portfolio",
+      "title": "Work that speaks for itself.",
+      "lead": "Explore original photographs from the workshop archive. Look at the shapes, fabric fit and finishing details.",
+      "body": "The archive includes work from different years and locations. Categories and search help you find similar furniture. Each photograph opens on a separate page with its description.",
+      "seoTitle": "Upholstery portfolio — the Klim & Co archive",
+      "seoDescription": "Real work by Oleg Klimko: sofa and armchair reupholstery, fitted covers, made-to-order furniture, cushions and upholstered details."
+    },
+    {
+      "slug": "contacts",
+      "title": "Let’s talk about your furniture.",
+      "lead": "Send photographs and approximate dimensions. Tell us what you want to keep and what you would like to change.",
+      "body": "Prepare a photograph of the whole piece and close-ups of areas that need attention. Include approximate dimensions, your location and the result you want. This helps us discuss possible solutions and the next steps. The workshop is in Warsaw; enquiries from other locations are discussed individually.",
+      "seoTitle": "Contact an upholsterer in Warsaw — Klim & Co",
+      "seoDescription": "Oleg Klimko, Warsaw. Call +48 733 272 681 or email Xelogen9999@gmail.com to discuss reupholstery, furniture repair and fitted covers."
+    }
+  ],
+  "services": [
+    {
+      "slug": "upholstery",
+      "title": "Reupholstery",
+      "lead": "Familiar furniture. A fresh feel.",
+      "body": "We replace upholstery on sofas, armchairs and chairs. We discuss fabric, leather or faux leather, seams, fit and finishing details.",
+      "detail": "We check the filling and the parts that affect comfort. If they need repair or replacement, we discuss this before starting. The scope depends on the furniture’s construction and condition.",
+      "seoTitle": "Sofa and armchair reupholstery in Warsaw — Klim & Co",
+      "seoDescription": "Reupholstery for sofas, armchairs and chairs in Warsaw. Discuss upholstery materials and filling with Oleg Klimko."
+    },
+    {
+      "slug": "restoration",
+      "title": "Upholstered furniture restoration",
+      "lead": "Keep its character. Restore its comfort.",
+      "body": "Sagging seats, uneven support and a loose frame can have different causes. We assess the filling, springs, support and accessible parts of the frame, then agree which elements need repair or replacement.\n\nReplacing the outer fabric alone will not correct every underlying problem. We discuss the condition of the furniture and the required work before choosing the final finish.",
+      "detail": "Older and unusual pieces may need an inspection before the final estimate. Hidden wear can become visible during dismantling, so any additional work should be agreed before it is carried out. Photographs in the archive document real projects; their materials and scope are not a fixed offer for another piece.",
+      "seoTitle": "Upholstered furniture restoration in Warsaw — Klim & Co",
+      "seoDescription": "Repair of furniture filling, springs and frames in Warsaw. Discuss the condition of your sofa or armchair and an individual scope of restoration."
+    },
+    {
+      "slug": "covers",
+      "title": "Made-to-measure covers",
+      "lead": "Fitted to your furniture.",
+      "body": "We design and sew removable covers for sofas, armchairs, chairs and mattresses, taking the furniture’s shape, removal and fabric properties into account.",
+      "detail": "We discuss the cover’s construction, fastenings and finish. Cleaning instructions depend on the chosen fabric. Whether it can be washed, and how, must be checked against that material’s care guidance.",
+      "seoTitle": "Made-to-measure sofa and armchair covers in Warsaw — Klim & Co",
+      "seoDescription": "Removable covers for sofas, armchairs, chairs and mattresses. Individual fitting by Oleg Klimko’s Klim & Co workshop in Warsaw."
+    },
+    {
+      "slug": "details",
+      "title": "Mechanisms and upholstered details",
+      "lead": "Small changes that improve comfort.",
+      "body": "We discuss repairs or replacement of sofa-bed mechanisms where suitable parts and the furniture’s construction allow it. We also sew cushions, bolsters, mattresses and individual upholstered elements to agreed dimensions.\n\nThese are different tasks: a mechanism needs a compatibility check, while a cushion needs accurate dimensions, suitable filling and a cover. Photographs and a clear description help identify the appropriate next step.",
+      "detail": "A photograph alone cannot confirm mechanism compatibility. If accessible, include the model or markings and show the furniture in both positions. Do not force a jammed mechanism. For cushions, describe the required firmness, thickness and whether the cover needs to be removable. Availability, cost and timing are agreed individually.",
+      "seoTitle": "Sofa mechanisms and made-to-measure cushions in Warsaw — Klim & Co",
+      "seoDescription": "Discuss sofa-bed mechanisms, cushions, bolsters and upholstered details made to agreed dimensions. Klim & Co upholstery workshop in Warsaw."
+    }
+  ],
+  "materials": [
+    {
+      "name": "Velvet",
+      "text": "A soft surface and rich colour. We consider pile direction, care and the properties of the specific fabric."
+    },
+    {
+      "name": "Jacquard",
+      "text": "A distinctive weave and pattern, suited to furniture whose texture is part of its character."
+    },
+    {
+      "name": "Chenille",
+      "text": "Textured yarn and a pleasant feel. Collections differ in composition and performance; we check the sample and the manufacturer’s guidance."
+    },
+    {
+      "name": "Woven upholstery fabric",
+      "text": "A visible weave and even geometry that emphasise a simple shape and colour."
+    },
+    {
+      "name": "Leather",
+      "text": "A distinctive feel and natural grain. Material quality, cutting and suitable care all matter."
+    },
+    {
+      "name": "Faux leather",
+      "text": "An even surface and a wide choice of colours. Durability and care depend on its composition and conditions of use."
+    }
+  ],
+  "process": [
+    {
+      "title": "Getting to know the furniture",
+      "text": "We look at photographs, dimensions and your ideas, then clarify the task and whether an inspection is needed."
+    },
+    {
+      "title": "Agreeing the plan",
+      "text": "We choose materials and details, and discuss the scope, cost and timing of the individual project."
+    },
+    {
+      "title": "Work in the workshop",
+      "text": "We restore the support, cut and sew materials, and upholster according to the agreed plan."
+    },
+    {
+      "title": "Checking the result",
+      "text": "We examine the details and discuss care for the chosen material."
+    }
+  ]
+}

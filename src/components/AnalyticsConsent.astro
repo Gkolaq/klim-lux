@@ -1,0 +1,32 @@
+---
+import type { Locale } from '../i18n/locales';
+import { ANALYTICS_UI } from '../i18n/analytics';
+interface Props { measurementId: string; locale: Locale; }
+const { measurementId, locale } = Astro.props;
+const copy = ANALYTICS_UI[locale];
+---
+<section id="analytics-consent" class="analytics-consent" data-measurement-id={measurementId} aria-labelledby="analytics-title" hidden>
+  <h2 id="analytics-title">{copy.title}</h2>
+  <p>{copy.description}</p>
+  <details><summary>{copy.details}</summary><p>{copy.notice}</p><a href="https://support.google.com/analytics/answer/6004245" target="_blank" rel="noopener noreferrer">{copy.google} ↗</a></details>
+  <div class="analytics-actions">
+    <button type="button" data-analytics-choice="denied">{copy.reject}</button>
+    <button type="button" data-analytics-choice="granted">{copy.accept}</button>
+    <button type="button" data-analytics-close hidden>{copy.close}</button>
+  </div>
+</section>
+<script>import '../scripts/analytics';</script>
+<style>
+  .analytics-consent { position:fixed; z-index:1000; left:4%; bottom:max(16px,env(safe-area-inset-bottom)); width:min(640px,92%); max-height:65dvh; overflow:auto; padding:20px; color:var(--text,#eee5d7); background:#160d10; border:1px solid #8b7151; border-radius:8px; box-shadow:0 12px 45px #0009; }
+  .analytics-consent[hidden] { display:none; }
+  .analytics-consent h2 { margin:0 0 8px; font-size:24px; }
+  .analytics-consent p { margin:0 0 12px; font-size:15px; line-height:1.6; }
+  .analytics-consent summary,.analytics-consent a { color:#d4bb89; font-size:14px; }
+  .analytics-consent summary { cursor:pointer; margin:0 0 10px; }
+  .analytics-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+  .analytics-actions button { flex:1; min-height:44px; padding:10px 14px; border:1px solid #aa9067; border-radius:7px; background:#24131a; color:#eee5d7; font-family:inherit; font-size:14px; font-weight:600; line-height:1.35; cursor:pointer; }
+  .analytics-actions button:hover { background:#44202b; }
+  .analytics-actions button:focus-visible { outline:2px solid #e1c18c; outline-offset:3px; }
+  .analytics-actions button[hidden] { display:none; }
+  @media(max-width:480px) { .analytics-consent { padding:16px; } .analytics-consent h2 { font-size:22px; } }
+</style>

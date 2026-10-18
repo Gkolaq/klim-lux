@@ -1,0 +1,44 @@
+---
+import Home from '../../views/Home.astro';
+import Services from '../../views/Services.astro';
+import Service from '../../views/Service.astro';
+import Materials from '../../views/Materials.astro';
+import Workshop from '../../views/Workshop.astro';
+import Contacts from '../../views/Contacts.astro';
+import Portfolio from '../../views/Portfolio.astro';
+import Work from '../../views/Work.astro';
+import Library from '../../views/Library.astro';
+import LibraryItem from '../../views/LibraryItem.astro';
+import Article from '../../views/Article.astro';
+import { AUTHORED_ARTICLES } from '../../data/articles';
+import NotFound from '../404.astro';
+import {isLocale,localePath} from '../../i18n/locales';
+import {portfolioSelection,librarySelection} from '../../data/collections';
+const path=Astro.params.path??'',data=Astro.locals.content;
+const views:Record<string,typeof Home>={'':Home,services:Services,materials:Materials,workshop:Workshop,contacts:Contacts,portfolio:Portfolio,library:Library};
+let View=views[path],slug:string|undefined,id:string|undefined;
+if(!View&&path.startsWith('services/')) {
+  slug=path.slice(9);
+  if(data.services.some(s=>s.slug===slug)) View=Service;
+}
+if(!View&&path.startsWith('portfolio/')) {
+  id=path.slice(10);
+  if(data.works.some(w=>w.id===id&&w.visible)) View=Work;
+}
+if(!View&&path.startsWith('library/')) {id=path.slice(8);if(data.library.some(item=>item.id===id&&item.visible))View=LibraryItem;}
+if(!View&&path.startsWith('materials/')) {
+  id=path.slice(10);
+  if(AUTHORED_ARTICLES.some(article=>article.slug===id&&article.language===Astro.params.locale))View=Article;
+}
+if(!isLocale(Astro.params.locale)||!View) {View=NotFound;Astro.response.status=404;}
+else if(path==='portfolio'||path==='library') {
+  const selection=(path==='portfolio'?portfolioSelection:librarySelection)(data,Astro.params.locale,Astro.url.searchParams);
+  if(selection.normalise) {
+    const params=new URLSearchParams(Astro.url.searchParams);
+    if(selection.current>1)params.set('page',String(selection.current));else params.delete('page');
+    return Astro.redirect(localePath(Astro.params.locale,'/'+path+'/')+(params.size?'?'+params.toString():''),301);
+  }
+}
+
+---
+<View slug={slug} id={id}/>

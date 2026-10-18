@@ -1,0 +1,6 @@
+.gallery-grid .work[hidden] { display: block !important; }
+.gallery-toolbar, .gallery-result, #load-more, .menu-toggle, .contact-form { display: none !important; }
+.header nav { display: flex !important; flex-wrap: wrap; }
+.header { height: auto; padding-block: 24px; flex-wrap: wrap; }
+.noscript-note { color: #b9b0a4; line-height: 1.7; }
+.noscript-note a { color: #c4a572; text-decoration: underline; }

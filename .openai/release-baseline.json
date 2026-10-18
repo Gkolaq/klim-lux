@@ -1,0 +1,37 @@
+{
+  "format": "klim-release-baseline-v1",
+  "captured_at": "2026-10-16T03:27:56.477688+00:00",
+  "project_id": "appgprj_6ac13fc8d10481918e5df6e700854015",
+  "origin": "https://www.klim-lux.com",
+  "audience": "public",
+  "verified_runtime_revision": 6,
+  "known_good": {
+    "version_number": 36,
+    "version_id": "appgprj_6ac13fc8d10481918e5df6e700854015~appgver_2c24444e88308191835baa8600da9d31",
+    "source_commit": "42cd5f785d31440bc616b26be9794621356908fe",
+    "deployment_id": "appgdep_6ad11df82fd081919497dffdc777cb89"
+  },
+  "older_fallback": {
+    "version_number": 31,
+    "version_id": "appgprj_6ac13fc8d10481918e5df6e700854015~appgver_37aa8d307e788191803311ff583f2b7c",
+    "source_commit": "236224023f0b8264c24c0d03a72b4ef292e35e53",
+    "deployment_id": "appgdep_6acf2ce037f88191976dc527a562d900",
+    "archive_hash": "sha256:e812963060981d1167c57a556f7403c6b80e9c09aa7caa2fbdc6adae1eade0cd"
+  },
+  "note": "Verified predecessor snapshot before the tooling-only release16Oct; never use this file instead of fresh native publication/source evidence.",
+  "historical_fallbacks": [
+    {
+      "version_number": 31,
+      "version_id": "appgprj_6ac13fc8d10481918e5df6e700854015~appgver_37aa8d307e788191803311ff583f2b7c",
+      "source_commit": "236224023f0b8264c24c0d03a72b4ef292e35e53",
+      "deployment_id": "appgdep_6acf2ce037f88191976dc527a562d900",
+      "archive_hash": "sha256:e812963060981d1167c57a556f7403c6b80e9c09aa7caa2fbdc6adae1eade0cd"
+    },
+    {
+      "version_number": 30,
+      "version_id": "appgprj_6ac13fc8d10481918e5df6e700854015~appgver_87193569fdc48191a39924db88f10c09",
+      "source_commit": "f1ff2b48a2bbc858a50381c3ace3e84c063eb46d",
+      "archive_hash": "sha256:33d1162f57e3689a138aaea690b6dc5764cc38578660aa37e2dcc2985a346a8b"
+    }
+  ]
+}

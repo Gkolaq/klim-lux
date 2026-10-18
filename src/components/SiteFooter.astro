@@ -1,0 +1,18 @@
+---
+import type {Content} from '../data/content';
+import type {Locale} from '../i18n/locales';
+import {UI} from '../i18n/ui';
+import Brand from './Brand.astro';
+import {phoneHref} from '../data/content';
+import {localePath} from '../i18n/locales';
+import {ANALYTICS_UI} from '../i18n/analytics';
+interface Props {data:Content;t:typeof UI[Locale];locale:Locale;nav:string[][];basePath:string;analyticsEnabled?:boolean;}
+const {data,t,locale,nav,basePath,analyticsEnabled=false}=Astro.props;
+const href=(p:string)=>localePath(locale,p);
+---
+  <footer class="footer wrap"><div><Brand href={href('/')} label={'Klim & Co — '+t.home} footer/><p>{data.business.owner}<br/>{data.business.city}</p></div><nav aria-label={t.footerNav}>{nav.map(([p,label])=><a href={href(p)}>{label}</a>)}</nav><div class="footer-contact"><a href={phoneHref(data.business.phone)}>{data.business.phone}</a><a href={'mailto:'+data.business.email}>{data.business.email}</a><a href="https://meb.ucoz.ru/" target="_blank" rel="noopener noreferrer">{t.original}</a></div><div class="footer-bottom"><span>© {new Date().getFullYear()} {data.business.name}</span>{analyticsEnabled&&<button type="button" data-analytics-settings>{ANALYTICS_UI[locale].settings}</button>}<a href="/admin/">{t.admin}</a></div></footer>
+<style>
+  [data-analytics-settings] { background:none; border:0; padding:0; color:inherit; font:inherit; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+  [data-analytics-settings]:hover { color:var(--gold,#ceb987); }
+  [data-analytics-settings]:focus-visible { outline:2px solid var(--gold,#ceb987); outline-offset:4px; }
+</style>

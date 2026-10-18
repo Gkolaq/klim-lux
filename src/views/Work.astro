@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WorkCard from '../components/WorkCard.astro';
+import {photoStyle} from '../components/photo-style';
+import PhotoArrow from '../components/PhotoArrow.astro';
+import ContactBand from '../components/ContactBand.astro';
+import {publicWorks} from '../data/content';
+import {UI} from '../i18n/ui';
+import {LIBRARY_UI} from '../i18n/library';
+import {localePath} from '../i18n/locales';
+const locale=Astro.locals.locale,t=UI[locale],v=LIBRARY_UI[locale],href=(p:string)=>localePath(locale,p);
+const data=Astro.locals.content,all=publicWorks(data),work=all.find(w=>w.id===Astro.props.id)!;
+const related=all.filter(w=>w.id!==work.id&&w.category===work.category).slice(0,3);
+const description=work.title+'. '+t.workNumber+work.id+(work.date?' · '+work.date:'')+'. '+(work.description||t.fromArchive);
+const seoTitle=(work.title.length>38?work.title.slice(0,35)+'…':work.title)+' · '+work.id+' | Klim & Co';
+const seoDescription=description.length>160?description.slice(0,157)+'…':description;
+const position=all.findIndex(w=>w.id===work.id),previous=all.length>1?all[(position-1+all.length)%all.length]:undefined,next=all.length>1?all[(position+1)%all.length]:undefined;
+const linkedService=data.services.find(service=>service.category===work.category);
+const optimized=/^\d+$/.test(work.id);
+const displayImage=optimized?work.thumbnail:work.image;
+const displaySources=optimized&&work.width>360?`/images/responsive/${work.id}-360.webp 360w, ${work.thumbnail} ${Math.min(720,work.width)}w, ${work.image} ${work.width}w`:undefined;
+const previousHref=previous?href('/portfolio/'+previous.id+'/'):'',nextHref=next?href('/portfolio/'+next.id+'/'):'';
+---
+<Layout title={seoTitle} description={seoDescription} crumbs={[{name:t.portfolio,href:href('/portfolio/')},{name:work.title}]}>
+  <article class="project wrap"><div class="project-heading"><p class="eyebrow">{t.categories[work.category]} / № {work.id}</p><h1>{work.title}</h1></div>
+    <figure class="project-photo"><div class="photo-stage">{previous&&<PhotoArrow href={previousHref} label={t.previousWork} direction="previous"/>}<a id="open-photo-viewer" class="photo-open" href={work.image} target="_blank" rel="noopener noreferrer" aria-label={t.photoOriginal+': '+work.title} aria-haspopup="dialog"><img class="photo-edge" style={photoStyle(work)} src={displayImage} srcset={displaySources} sizes="(max-width: 580px) 80vw, (max-width: 1100px) 76vw, 1100px" width={work.width} height={work.height} alt={work.title} fetchpriority="high" decoding="async"/></a>{next&&<PhotoArrow href={nextHref} label={t.nextWork} direction="next"/>}</div><figcaption><span>{t.enlarge}</span><span>{position+1} / {all.length}</span></figcaption></figure>
+    <div class="project-info"><div><p class="eyebrow">{t.aboutWork}</p><p class="prose">{work.description||t.fromArchive}</p></div><dl><div><dt>{t.category}</dt><dd>{t.categories[work.category]}</dd></div>{work.date&&<div><dt>{t.archiveDateLabel}</dt><dd>{work.date}</dd></div>}<div><dt>{t.archive}</dt><dd>Klim &amp; Co</dd></div></dl></div><div class="project-links"><a class="text-link" href={href(linkedService?'/services/'+linkedService.slug+'/':'/services/')}>{t.relatedService}: {linkedService?.title??t.services} →</a>{work.source&&<a class="text-link" href={work.source} target="_blank" rel="noopener noreferrer">{t.archiveSource}</a>}<a class="text-link" href={href('/contacts/')}>{t.contactBandAction}</a><a class="text-link" href={href('/portfolio/')}>{t.allArchive}</a></div>
+  </article>
+  <dialog id="photo-viewer" class="photo-viewer" aria-label={v.viewer}><header class="photo-viewer-heading"><p>{work.title}</p><button id="close-photo-viewer" type="button" aria-label={v.close} autofocus>×</button></header><div class="photo-viewer-stage">{previous?<PhotoArrow href={previousHref+'#viewer'} label={t.previousWork} direction="previous"/>:<span/>}<img data-full-src={work.image} width={work.width} height={work.height} alt={work.title} decoding="async"/>{next?<PhotoArrow href={nextHref+'#viewer'} label={t.nextWork} direction="next"/>:<span/>}</div><footer class="photo-viewer-footer"><span>{position+1} / {all.length}</span><span>{v.viewerHint}</span><a href={work.image} target="_blank" rel="noopener noreferrer">{t.photoOriginal} ↗</a></footer></dialog>
+  <section class="section wrap"><div class="section-heading"><h2>{t.related}</h2></div><div class="work-grid">{related.map(w=><WorkCard work={w}/>)}</div></section><ContactBand/>
+  <script>
+    import '../scripts/photo-viewer';
+  </script>
+</Layout>

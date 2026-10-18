@@ -1,0 +1,8 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {UI} from '../i18n/ui';
+import {localePath} from '../i18n/locales';
+const locale=Astro.locals.locale,t=UI[locale];
+Astro.response.status=404;
+---
+<Layout title={t.notFoundSeo} description={t.notFoundText} noindex><section class="empty-state wrap"><p class="eyebrow">404</p><h1>{t.notFoundTitle}</h1><p>{t.notFoundText}</p><a class="button button-gold" href={localePath(locale)}>{t.toHome}</a><a class="button button-outline" href={localePath(locale,'/portfolio/')}>{t.portfolio}</a></section></Layout>

@@ -1,27 +1,43 @@
 {
-  "schema_version": 1,
-  "project": "Klim-Lux / Klim & Co",
-  "stage": "PREPARED",
-  "sites": {
-    "published_version": 39,
-    "published_source_commit": "8fe371c438b7a0d5c5fc2d77bd4b5728984fe3ae",
-    "published_git_tree": "e5903250a241e3fe1b54e0bf574f7a2787995fed",
-    "tracked_files": 1071
+  "format": "klim-public-source-snapshot-v2",
+  "status": "VERIFIED_SOURCE_SNAPSHOT",
+  "recorded_date": "2026-10-17",
+  "source_publication": {
+    "version_number": 41,
+    "source_commit": "09e1674048ca63452a6db7c7f779dc700ab4fd35",
+    "source_tree": "19a6c4da55d3d0ef50e5e7df99589d48fc408eb8",
+    "note": "Dated verified source snapshot; resolve native Sites publication before future production audits."
   },
-  "github": {
-    "base_branch": "main",
-    "base_commit": "87fbd9147837cd7151896015af22c682cb560fb7",
-    "source_import_completed": false,
-    "main_updated": false
+  "public_export": {
+    "tracked_files": 1073,
+    "operational_documents_sanitized": [
+      ".openai/operations.md",
+      "docs/contact-email-setup.md",
+      "docs/launch-roadmap.md",
+      "docs/project-context.md",
+      "docs/publication.md",
+      "docs/refactor-plan.md",
+      "docs/work-state.json"
+    ],
+    "application_and_photographs_changed": false,
+    "database_or_uploads_exported": false,
+    "git_history_safe_for_public_push": false,
+    "rule": "Transfer this reviewed file tree only; never push the private Sites Git ancestry."
   },
-  "acceptance": [
-    "The complete reviewed source tree is imported into a recovery branch.",
-    "The previous main commit remains in history.",
-    "All application source and approved assets have an inventory and integrity verification.",
-    "Changes pass the checks appropriate to their scope.",
-    "Delivery to the existing Sites project uses an exact source commit and verified artifact.",
-    "No merge, deployment, access change, or force push is automatic."
-  ],
-  "publication_policy": "A GitHub commit does not prove a Sites deployment.",
-  "checkpoint_scope": "Preparation record only. This branch is not the current application source."
+  "github_delivery": {
+    "repository": "Gkolaq/klim-lux",
+    "branch": "recovery/klim-lux-2-20261016",
+    "expected_previous_head": "7e250b8cd5e01209dd2fd7f4c1ab3ebde0c669c5",
+    "default_branch_updated_by_import": false,
+    "verification": "After import, compare the complete remote file tree with the approved public-source manifest; a GitHub commit does not prove a Sites deployment."
+  },
+  "runtime_recovery": {
+    "source_and_runtime_data_are_separate": true,
+    "preserve_existing_d1_r2_and_configuration": true
+  },
+  "continuation": [
+    "Preserve PL/RU/EN, real photographs, owner content, design and existing Site identity.",
+    "Use the verified release tools for any future publication; do not start a replacement Site.",
+    "Keep private account, session, support history and credentials outside the public repository."
+  ]
 }

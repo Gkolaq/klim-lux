@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { AUTHORED_ARTICLES, articlePath, articleLanguagePaths, ARTICLE_UI } from '../data/articles';
+import { DATE_LOCALES, localePath } from '../i18n/locales';
+import { SITE_URL } from '../config/site';
+const entry = AUTHORED_ARTICLES.find(item => item.slug === Astro.props.id && item.language === Astro.locals.locale)!;
+const locale=Astro.locals.locale, t=ARTICLE_UI[locale], href=(path:string)=>localePath(locale,path);
+const canonical = SITE_URL + articlePath(entry);
+const article = {
+  '@type': 'Article', '@id': canonical + '#article', url: canonical,
+  headline: entry.title, description: entry.description, inLanguage: entry.language,
+  author: { '@type': 'Person', name: entry.author, url: SITE_URL + href('/workshop/') },
+  datePublished: entry.published, dateModified: entry.modified,
+  mainEntityOfPage: { '@id': canonical + '#webpage' },
+  isBasedOn: entry.sourceUrl, publisher: { '@id': SITE_URL + '/#organization' },
+};
+const page = { title: entry.title, lead: entry.lead };
+const publishedLabel = new Intl.DateTimeFormat(DATE_LOCALES[locale],{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(entry.published+'T12:00:00Z'));
+---
+<Layout title={entry.title + ' — ' + entry.author + ' | Klim-Lux'} description={entry.description} localizedPaths={articleLanguagePaths(entry)} {article} crumbs={[{name:t.back,href:href('/materials/')},{name:entry.title}]}>
+  <PageIntro {page} eyebrow={t.first}/>
+  <article class="copy-section wrap author-article" aria-label={entry.title}>
+    <p class="eyebrow">{entry.author} · <time datetime={entry.published}>{publishedLabel}</time></p>
+    <p class="article-origin">{t.origin}</p>
+    {entry.sections.map(section => <section><h2>{section.heading}</h2>{section.paragraphs.map(paragraph => <p class="prose">{paragraph}</p>)}</section>)}
+    <footer class="article-source"><p><a class="text-link" href={href('/services/upholstery/')}>{t.service} →</a></p><p><a class="text-link" href={entry.sourceUrl} target="_blank" rel="noopener noreferrer">{t.source} ↗</a></p><p><a class="text-link" href={href('/materials/')}>← {t.back}</a></p><p><a class="text-link" href={href('/contacts/')}>{t.contact} →</a></p></footer>
+  </article>
+</Layout>
+<style>
+  .author-article{max-width:68rem}.author-article section{max-width:76ch;margin:2.6rem auto}.author-article h2{font-size:clamp(1.35rem,2.4vw,1.9rem);line-height:1.3;margin-bottom:1.2rem}.author-article .prose{margin-block:1rem}.article-origin{color:var(--muted);line-height:1.7;max-width:76ch}.article-source{border-top:1px solid var(--line);padding-top:1.5rem;margin-top:2.5rem}.article-source p{margin-block:1rem}
+</style>

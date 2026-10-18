@@ -1,0 +1,21 @@
+---
+import {portfolioSelection} from '../data/collections';
+import Layout from '../layouts/Layout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import WorkCard from '../components/WorkCard.astro';
+import ContactBand from '../components/ContactBand.astro';
+import {pageCopy,publicWorks} from '../data/content';
+import {UI} from '../i18n/ui';
+import {localePath} from '../i18n/locales';
+const locale=Astro.locals.locale,t=UI[locale],href=(p:string)=>localePath(locale,p);
+const data=Astro.locals.content,page=pageCopy(data,'portfolio');
+const {all,category,q,filtered,pages,current,start,shown,filteredView}=portfolioSelection(data,locale,Astro.url.searchParams);
+const pageLink=(n:number)=>{const params=new URLSearchParams();if(category)params.set('category',category);if(q)params.set('q',q);if(n>1)params.set('page',String(n));return href('/portfolio/')+(params.size?'?'+params.toString():'');};
+---
+<Layout title={page.seoTitle+(current>1?' — '+t.page.toLocaleLowerCase(locale)+' '+current:'')} description={page.seoDescription} noindex={filteredView} pagination={current} crumbs={[{name:t.portfolio}]}>
+  <PageIntro page={page} eyebrow={t.fromArchive}/>
+  <section class="portfolio-section wrap"><form class="portfolio-toolbar" method="get" action={href('/portfolio/')}><label>{t.category}<select name="category"><option value="">{t.all} ({all.length})</option>{Object.entries(t.categories).map(([key,label])=><option value={key} selected={category===key}>{label} ({all.filter(w=>w.category===key).length})</option>)}</select></label><label class="search-field">{t.search}<input type="search" name="q" value={q} maxlength="120" placeholder={t.searchHint}/></label><button class="button button-gold" type="submit">{t.find}</button>{filteredView&&<a class="text-link" href={href('/portfolio/')}>{t.reset}</a>}</form><div class="result-line"><span>{filtered.length?`${start+1}–${start+shown.length} ${t.of} ${filtered.length}`:t.empty}</span><p>{t.separatePhotos}</p></div>
+    {shown.length?<div class="work-grid">{shown.map((w,i)=><WorkCard work={w} eager={i<3}/>)}</div>:<div class="empty-state"><h2>{t.empty}</h2><p>{t.emptyHint}</p><a class="button button-outline" href={href('/portfolio/')}>{t.allArchive}</a></div>}
+    {pages>1&&<nav class="pagination" aria-label={t.pagination}>{current>1&&<a href={pageLink(current-1)} rel="prev">{t.previous}</a>}{Array.from({length:pages},(_,i)=>i+1).filter(n=>n===1||n===pages||Math.abs(n-current)<=2).map(n=><a href={pageLink(n)} aria-current={n===current?'page':undefined}>{n}</a>)}{current<pages&&<a href={pageLink(current+1)} rel="next">{t.next}</a>}</nav>}<p class="archive-note">{page.body}</p>
+  </section><ContactBand/>
+</Layout>

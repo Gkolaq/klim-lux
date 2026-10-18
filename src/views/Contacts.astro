@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import {pageCopy,phoneHref} from '../data/content';
+import {UI} from '../i18n/ui';
+import {CONTACT_UI} from '../i18n/contact';
+import {env} from 'cloudflare:workers';
+import {contactMailReady} from '../server/contact-mail';
+const t=UI[Astro.locals.locale],data=Astro.locals.content,page=pageCopy(data,'contacts');
+const serverMail=contactMailReady(env,Astro.url.hostname)&&!Astro.locals.storageError;
+const mail=CONTACT_UI[Astro.locals.locale];
+const formCopy={invalidName:t.invalidName,invalidContact:t.invalidContact,invalidMessage:t.invalidMessage,greeting:t.greeting,namePrefix:t.namePrefix,contactPrefix:t.contactPrefix,emailSubject:t.emailSubject,prepared:t.prepared,copied:t.copied,copyManually:t.copyManually,...mail};
+---
+<Layout title={page.seoTitle} description={page.seoDescription} crumbs={[{name:t.contacts}]}>
+  <PageIntro page={page} eyebrow={t.contactIntro}/>
+  <section class="contact-grid wrap"><div class="contact-details"><p class="eyebrow">{data.business.owner}</p><a class="contact-phone" href={phoneHref(data.business.phone)}>{data.business.phone}</a><a class="contact-email" href={'mailto:'+data.business.email}>{data.business.email}</a><p>{data.business.owner} · {data.business.city}</p><p>{data.business.hours}</p><div class="contact-preparation"><h2>{t.sendWhat}</h2><p class="prose">{page.body}</p></div></div><form id="contact-form" class="contact-form" method="post" data-delivery={serverMail?'server':'draft'} data-locale={Astro.locals.locale} data-email={data.business.email} data-copy={JSON.stringify(formCopy)}><h2>{serverMail?mail.send:mail.save}</h2><label>{t.yourName}<input name="name" autocomplete="name" maxlength="100" required/></label><label>{t.contactField}<input name="contact" autocomplete="off" maxlength="150" required/></label><label>{t.furnitureMessage}<textarea name="message" rows="6" minlength="10" maxlength="4000" required></textarea></label><input name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true" hidden/><button class="button button-gold" type="submit" disabled>{serverMail?mail.send:mail.save}</button><p class="form-note">{serverMail?mail.note:mail.unavailable}</p><p id="form-status" role="status" class="form-status"></p><label id="email-draft" hidden>{t.draft}<textarea id="email-draft-text" rows="8" readonly></textarea></label><button id="copy-message" class="button button-outline" type="button" hidden>{t.copy}</button><noscript><p>{t.noScript}</p></noscript></form></section>
+  <script>
+    import {installContactForm} from '../scripts/contact';
+    installContactForm();
+  </script>
+</Layout>

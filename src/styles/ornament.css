@@ -1,0 +1,19 @@
+body {position:relative;isolation:isolate;overflow-x:clip}
+.page-ornament {position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;--vine-wine:#701e35;--vine-gold:#c5a261;--vine-leaf:#641a2e}
+/* The ornament stays above the black background and below readable content. */
+body:not(.admin-body)>main,body:not(.admin-body)>.language-switch,body:not(.admin-body)>.breadcrumbs,body:not(.admin-body)>.storage-banner,body:not(.admin-body)>.footer {position:relative;z-index:1}
+.ornament-vertical {position:absolute;left:0;top:0;width:80px;height:66.667%;opacity:.62;-webkit-mask-image:linear-gradient(to bottom,#000 94%,transparent);mask-image:linear-gradient(to bottom,#000 94%,transparent)}
+.ornament-horizontal {position:absolute;left:0;top:0;width:66.667%;height:120px;opacity:.62}
+.ornament-horizontal-compact {display:none}
+.ornament-stem-depth {fill:none;stroke:var(--vine-wine);stroke-width:4.4;stroke-linecap:round;stroke-linejoin:round}
+.ornament-stem {fill:none;stroke:var(--vine-gold);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.ornament-leaf {fill:var(--vine-leaf);stroke:var(--vine-gold);stroke-width:1;stroke-linejoin:round}
+.ornament-veins {fill:none;stroke:var(--vine-gold);stroke-width:.7;stroke-linecap:round}
+.ornament-tendril {fill:none;stroke:var(--vine-gold);stroke-width:1.1;stroke-linecap:round}
+.ornament-rune {fill:none;stroke:#d5b97d;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:580px) {
+  .ornament-vertical {width:80px;opacity:.56}
+  .ornament-horizontal {height:80px;opacity:.56}
+  .ornament-horizontal:not(.ornament-horizontal-compact) {display:none}
+  .ornament-horizontal-compact {display:block}
+}

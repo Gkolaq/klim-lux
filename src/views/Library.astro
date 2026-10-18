@@ -1,0 +1,19 @@
+---
+import {librarySelection} from '../data/collections';
+import Layout from '../layouts/Layout.astro';
+import LibraryCard from '../components/LibraryCard.astro';
+import {LIBRARY_CATEGORIES,publicLibrary,libraryDescription,PUBLICATION_LANGUAGE_NAMES} from '../data/library';
+import {LIBRARY_UI} from '../i18n/library';
+import {LOCALES,LANGUAGE_NAMES,localePath} from '../i18n/locales';
+const locale=Astro.locals.locale,t=LIBRARY_UI[locale],href=localePath(locale,'/library/');
+const {all,q,lang,category,filtered,pages,current,start,shown,filteredView}=librarySelection(Astro.locals.content,locale,Astro.url.searchParams);
+const pageLink=(n:number)=>{const params=new URLSearchParams();if(q)params.set('q',q);if(lang)params.set('language',lang);if(category)params.set('category',category);if(n>1)params.set('page',String(n));return href+(params.size?'?'+params.toString():'');};
+---
+<Layout title={t.seo} description={t.description} crumbs={[{name:t.nav}]} noindex={filteredView} pagination={current}>
+  <section class="page-intro wrap library-intro"><p class="eyebrow">{t.eyebrow}</p><h1>{t.title}</h1><p class="lead">{t.lead}</p><div class="library-intro-line"><span>{all.length} · {t.nav}</span><span>Polski / Русский</span></div></section>
+  <section class="library-section wrap"><form class="portfolio-toolbar library-toolbar" action={href} method="get"><label class="search-field">{t.search}<input type="search" name="q" value={q} maxlength="120"/></label><label>{t.language}<select name="language"><option value="">{t.all}</option>{Object.keys(PUBLICATION_LANGUAGE_NAMES).filter(l=>all.some(item=>item.language===l)).map(l=><option value={l} selected={lang===l}>{PUBLICATION_LANGUAGE_NAMES[l as keyof typeof PUBLICATION_LANGUAGE_NAMES]} ({all.filter(item=>item.language===l).length})</option>)}</select></label><label>{t.topic}<select name="category"><option value="">{t.all}</option>{LIBRARY_CATEGORIES.map(c=><option value={c} selected={category===c}>{t.categories[c]}</option>)}</select></label><button type="submit" class="button button-gold">{t.find}</button>{filteredView&&<a class="text-link" href={href}>{t.reset}</a>}</form>
+    {shown.length?<><div class="result-line"><span>{start+1}–{start+shown.length} / {filtered.length}</span></div><div class="book-grid">{shown.map(item=><LibraryCard item={item}/>)}</div></>:<div class="empty-state"><h2>{t.empty}</h2><p>{t.emptyHint}</p><a class="button button-outline" href={href}>{t.back}</a></div>}
+    {pages>1&&<nav class="pagination" aria-label={t.nav}>{current>1&&<a href={pageLink(current-1)} rel="prev">←</a>}{Array.from({length:pages},(_,i)=>i+1).filter(n=>n===1||n===pages||Math.abs(n-current)<=2).map(n=><a href={pageLink(n)} aria-current={n===current?'page':undefined}>{n}</a>)}{current<pages&&<a href={pageLink(current+1)} rel="next">→</a>}</nav>}
+    <aside class="library-note"><p>{t.note}</p><p>{t.historical}</p></aside>
+  </section>
+</Layout>

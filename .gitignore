@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.sites-runtime/
+.wrangler/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
