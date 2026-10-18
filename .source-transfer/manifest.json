@@ -1,0 +1,28 @@
+{
+  "format": "klim-github-source-transfer-v1",
+  "source_version": 41,
+  "source_commit": "09e1674048ca63452a6db7c7f779dc700ab4fd35",
+  "expected_github_parent": "7e250b8cd5e01209dd2fd7f4c1ab3ebde0c669c5",
+  "expected_main": "87fbd9147837cd7151896015af22c682cb560fb7",
+  "public_tree": "28cfad0d37cfaa6eeaead9cc18b436db23d7b8c6",
+  "tracked_files": 1073,
+  "uncompressed_bytes": 69894145,
+  "archive_bytes": 68618522,
+  "archive_sha256": "1e7546c7836e9c82b27b5117dfc122cba2fcd702ab8523d695d871291b3782f5",
+  "chunk_size": 23068672,
+  "chunks": 3,
+  "repository": "Gkolaq/klim-lux",
+  "target_branch": "recovery/klim-lux-2-20261016",
+  "transport_branch": "transport/klim-v41-20261017",
+  "contains_git_history_or_runtime_data": false,
+  "sanitized_documents": [
+    ".openai/operations.md",
+    "docs/contact-email-setup.md",
+    "docs/launch-roadmap.md",
+    "docs/project-context.md",
+    "docs/publication.md",
+    "docs/refactor-plan.md",
+    "docs/work-state.json"
+  ],
+  "transport_mode": "fixed-3-web-bulk-v1"
+}
