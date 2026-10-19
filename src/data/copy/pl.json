@@ -1,0 +1,138 @@
+{
+  "business": {
+    "owner": "Oleg Klimko",
+    "city": "Warszawa",
+    "hours": "Termin spotkania ustalamy indywidualnie."
+  },
+  "home": {
+    "title": "Twoje meble.\nNowy rozdział.",
+    "lead": "Tapicerowanie, renowacja i pokrowce szyte na miarę. Pomagam odnowić meble, które chcesz zachować. Pracownia Olega Klimko w Warszawie.",
+    "note": "Dobieramy materiał i zakres prac do konstrukcji mebla, jego stanu oraz Twoich oczekiwań.",
+    "seoTitle": "Tapicer Warszawa — renowacja mebli i pokrowce | Klim & Co",
+    "seoDescription": "Pracownia tapicerska Olega Klimko w Warszawie. Wymiana tapicerki kanap i foteli, renowacja mebli oraz pokrowce na miarę. Zobacz autentyczne realizacje."
+  },
+  "pages": [
+    {
+      "slug": "services",
+      "title": "Rzemiosło, które widać w detalach.",
+      "lead": "Nowa tapicerka, naprawa konstrukcji czy dopasowany pokrowiec — proponujemy rozwiązanie odpowiednie dla Twojego mebla.",
+      "body": "Zdjęcia i wymiary pozwalają wstępnie ocenić zadanie. Ostateczny zakres prac ustalamy po sprawdzeniu stanu mebla. Przed rozpoczęciem uzgadniamy materiał, szczegóły wykonania i kolejność prac.",
+      "seoTitle": "Usługi tapicerskie w Warszawie — Klim & Co",
+      "seoDescription": "Tapicerowanie, renowacja mebli, pokrowce na miarę i prace przy mechanizmach rozkładania. Poznaj usługi pracowni Olega Klimko w Warszawie."
+    },
+    {
+      "slug": "materials",
+      "title": "Materiał dopasowany do codzienności.",
+      "lead": "Kolor i faktura zmieniają wygląd mebla. Właściwości materiału decydują o wygodzie użytkowania i pielęgnacji.",
+      "body": "Materiał dobieramy wspólnie, biorąc pod uwagę światło we wnętrzu, kształt mebla i sposób jego użytkowania. Warto powiedzieć nam o dzieciach i zwierzętach domowych. Dostępność tkaniny oraz możliwość obejrzenia próbek ustalamy przy omawianiu zlecenia.",
+      "seoTitle": "Dobór tkanin obiciowych w Warszawie — Klim & Co",
+      "seoDescription": "Dobór tkanin i materiałów obiciowych do kanap, foteli i pokrowców w Warszawie. Poznaj ich właściwości i wybierz tapicerkę do swojego mebla."
+    },
+    {
+      "slug": "workshop",
+      "title": "Za każdym meblem stoi człowiek.",
+      "lead": "Nazywam się Oleg Klimko. Odnawiam meble tapicerowane, zachowując to, co w nich cenne, i zmieniając to, co wymaga poprawy.",
+      "body": "W archiwum znajdziesz kanapy, fotele, zdejmowane pokrowce, poduszki i inne elementy tapicerowane. To zdjęcia rzeczywistych realizacji z różnych lat, również sprzed działalności w Warszawie. Nie są to wizualizacje.\n\nKażde zlecenie omawiamy indywidualnie. Czasem wystarczy wymiana tkaniny, a czasem potrzebna jest naprawa konstrukcji lub wypełnienia. Zaczynamy od rozmowy i oceny stanu mebla.",
+      "seoTitle": "Pracownia tapicerska Olega Klimko w Warszawie — Klim & Co",
+      "seoDescription": "Poznaj pracownię Klim & Co i Olega Klimko. Indywidualne podejście do tapicerowania, renowacji mebli i szycia pokrowców na miarę."
+    },
+    {
+      "slug": "portfolio",
+      "title": "Realizacje mówią same za siebie.",
+      "lead": "Zobacz autentyczne zdjęcia z archiwum pracowni. Zwróć uwagę na kształt mebli, dopasowanie materiału i wykończenie.",
+      "body": "Archiwum obejmuje prace z różnych lat i miejsc, także wcześniejsze realizacje. Kategorie i wyszukiwarka pomogą znaleźć podobny mebel. Każde zdjęcie ma osobną stronę z opisem.",
+      "seoTitle": "Realizacje tapicerskie — archiwum prac Klim & Co",
+      "seoDescription": "Autentyczne realizacje Olega Klimko: tapicerowanie kanap i foteli, pokrowce na miarę, meble na zamówienie oraz poduszki i inne elementy tapicerowane."
+    },
+    {
+      "slug": "contacts",
+      "title": "Porozmawiajmy o Twoich meblach.",
+      "lead": "Prześlij zdjęcia i przybliżone wymiary. Napisz, co chcesz zachować, a co zmienić.",
+      "body": "Przygotuj zdjęcie całego mebla oraz zbliżenia miejsc wymagających naprawy. Podaj przybliżone wymiary, miejscowość i oczekiwany efekt. Na tej podstawie omówimy możliwe rozwiązania i ustalimy dalsze kroki. Pracownia znajduje się w Warszawie; możliwość realizacji zlecenia z innej miejscowości ustalamy indywidualnie.",
+      "seoTitle": "Kontakt z tapicerem w Warszawie — Klim & Co",
+      "seoDescription": "Oleg Klimko, Warszawa. Zadzwoń: +48 733 272 681 lub napisz: Xelogen9999@gmail.com. Zapytaj o tapicerowanie, renowację mebli i pokrowce na miarę."
+    }
+  ],
+  "services": [
+    {
+      "slug": "upholstery",
+      "title": "Wymiana tapicerki",
+      "lead": "Ulubiony mebel w nowej odsłonie.",
+      "body": "Wymieniamy tapicerkę kanap, foteli i krzeseł. Dobieramy tkaninę, skórę naturalną lub materiał skóropodobny oraz ustalamy układ szwów, dopasowanie obicia i detale wykończenia.",
+      "detail": "Sprawdzamy stan wypełnienia i elementów wpływających na wygodę. Jeśli wymagają naprawy lub wymiany, omawiamy to przed rozpoczęciem prac. Zakres zlecenia zależy od budowy i stanu mebla.",
+      "seoTitle": "Wymiana tapicerki kanap i foteli w Warszawie — Klim & Co",
+      "seoDescription": "Tapicerowanie kanap, foteli i krzeseł w Warszawie. Dobór materiału obiciowego i ocena wypełnienia w pracowni Olega Klimko."
+    },
+    {
+      "slug": "restoration",
+      "title": "Renowacja mebli tapicerowanych",
+      "lead": "Zachować charakter. Przywrócić wygodę.",
+      "body": "Zapadnięte siedzisko, nierówne podparcie i luźny stelaż mogą mieć różne przyczyny. Oceniamy wypełnienie, sprężyny, podłoże i dostępne elementy konstrukcji, a następnie uzgadniamy naprawę lub wymianę.\n\nSama nowa tkanina nie usuwa wszystkich uszkodzeń wewnątrz mebla. Najpierw omawiamy stan i potrzebne prace, potem ostateczne wykończenie.",
+      "detail": "Starsze i nietypowe modele mogą wymagać oględzin przed ostateczną wyceną. Ukryte zużycie bywa widoczne dopiero po demontażu; dodatkowe prace trzeba uzgodnić przed ich wykonaniem. Zdjęcia archiwalne dokumentują konkretne realizacje, a nie stałą ofertę dla innego mebla.",
+      "seoTitle": "Renowacja mebli tapicerowanych w Warszawie — Klim & Co",
+      "seoDescription": "Naprawa wypełnienia, sprężyn i stelaża mebli tapicerowanych. Omów renowację kanapy lub fotela z Olegiem Klimko w Warszawie."
+    },
+    {
+      "slug": "covers",
+      "title": "Pokrowce szyte na miarę",
+      "lead": "Dopasowane do kształtu Twojego mebla.",
+      "body": "Projektujemy i szyjemy zdejmowane pokrowce na kanapy, fotele, krzesła i materace. Uwzględniamy kształt mebla, sposób zdejmowania pokrowca i właściwości materiału.",
+      "detail": "Ustalamy konstrukcję pokrowca, zapięcia i wykończenie. Zasady pielęgnacji zależą od tkaniny. Możliwość prania i jego warunki sprawdzamy w zaleceniach producenta konkretnego materiału.",
+      "seoTitle": "Pokrowce na kanapy i fotele na miarę — Klim & Co, Warszawa",
+      "seoDescription": "Szycie zdejmowanych pokrowców na kanapy, fotele, krzesła i materace. Indywidualne dopasowanie do mebla w pracowni Klim & Co w Warszawie."
+    },
+    {
+      "slug": "details",
+      "title": "Mechanizmy i elementy tapicerowane",
+      "lead": "Detale, które poprawiają wygodę.",
+      "body": "Omawiamy naprawę lub wymianę mechanizmów rozkładania, jeśli pozwalają na to konstrukcja mebla i dostępność zgodnych części. Szyjemy również poduszki, wałki, materace oraz osobne elementy tapicerowane według uzgodnionych wymiarów.\n\nTo różne zadania: mechanizm wymaga sprawdzenia zgodności, a poduszka — dokładnego wymiaru, odpowiedniego wypełnienia i pokrowca. Zdjęcia oraz opis pomagają wybrać właściwy następny krok.",
+      "detail": "Zdjęcie nie potwierdza zgodności mechanizmu. Pokaż oznaczenia modelu i obie pozycje mebla, jeśli są dostępne. Nie wymuszaj ruchu zablokowanego mechanizmu. Dla poduszek opisz twardość, grubość i potrzebę zdejmowanego pokrowca. Dostępność, koszt oraz termin ustalamy indywidualnie.",
+      "seoTitle": "Mechanizmy meblowe i poduszki na wymiar w Warszawie — Klim & Co",
+      "seoDescription": "Prace przy mechanizmach rozkładania oraz szycie poduszek, wałków i materacy na wymiar. Pracownia tapicerska Olega Klimko w Warszawie."
+    }
+  ],
+  "materials": [
+    {
+      "name": "Welur",
+      "text": "Miękka powierzchnia i głęboki kolor. Przy wyborze sprawdzamy kierunek włosa, zalecenia dotyczące pielęgnacji i parametry konkretnej tkaniny."
+    },
+    {
+      "name": "Żakard",
+      "text": "Wyrazisty splot i wzór. Dobry wybór, gdy struktura materiału ma podkreślić charakter mebla."
+    },
+    {
+      "name": "Szenil",
+      "text": "Miękka, przestrzenna przędza nadająca tkaninie przyjemną fakturę. Skład i właściwości zależą od kolekcji — porównujemy próbki oraz zalecenia producenta."
+    },
+    {
+      "name": "Plecionka",
+      "text": "Widoczny splot i regularna struktura. Podkreśla prostą formę mebla i wybrany kolor."
+    },
+    {
+      "name": "Skóra naturalna",
+      "text": "Naturalna faktura i charakterystyczny wygląd. Istotne są jakość skóry, sposób krojenia oraz odpowiednia pielęgnacja."
+    },
+    {
+      "name": "Materiał skóropodobny",
+      "text": "Gładka powierzchnia i duży wybór kolorów. Trwałość oraz sposób pielęgnacji zależą od składu materiału i warunków użytkowania."
+    }
+  ],
+  "process": [
+    {
+      "title": "Poznajemy mebel",
+      "text": "Oglądamy zdjęcia, sprawdzamy wymiary i omawiamy Twoje oczekiwania. Ustalamy, czy potrzebne są oględziny."
+    },
+    {
+      "title": "Ustalamy szczegóły",
+      "text": "Dobieramy materiał i uzgadniamy konstrukcję oraz wykończenie. Omawiamy zakres, cenę i termin konkretnego zlecenia."
+    },
+    {
+      "title": "Pracujemy w pracowni",
+      "text": "Naprawiamy konstrukcję i wypełnienie, kroimy materiał, szyjemy i tapicerujemy zgodnie z ustaleniami."
+    },
+    {
+      "title": "Sprawdzamy efekt",
+      "text": "Oglądamy gotowy mebel i omawiamy zasady pielęgnacji wybranego materiału."
+    }
+  ]
+}

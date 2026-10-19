@@ -1,0 +1,17 @@
+@font-face {
+  font-family:Editorial;
+  src:url('/fonts/editorial.woff2') format('woff2');
+  font-display:swap;
+  font-weight:400}
+
+:root {
+  --ink:#000;
+  --surface:#101010;
+  --text:#f3eee7;
+  --muted:#bfb7ad;
+  --gold:#d4b47b;
+  --line:#484035;
+  --wine:#55222e;
+  --serif:Editorial,Georgia,serif;
+  --sans:Arial,Helvetica,sans-serif;
+  color-scheme:dark}

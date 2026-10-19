@@ -1,0 +1,34 @@
+---
+import type {Content} from '../data/content';
+import type {Locale} from '../i18n/locales';
+import {UI} from '../i18n/ui';
+import {SITE_URL} from '../config/site';
+import {LOCALES,HREFLANG,OG_LOCALE,localePath} from '../i18n/locales';
+import {publicWorks} from '../data/content';
+interface Props {data:Content;locale:Locale;title:string;description:string;canonical:string;basePath:string;crumbs:{name:string;href?:string}[];noindex:boolean;admin:boolean;home:string;storageError:boolean;availableLocales?:readonly Locale[];localizedPaths?:Partial<Record<Locale,string>>;article?:Record<string,unknown>;}
+const {data,locale,title,description,canonical,basePath,crumbs,noindex,admin,home,storageError,availableLocales=LOCALES,localizedPaths,article}=Astro.props;
+const href=(p:string)=>localePath(locale,p);
+const alternatePath=(language:Locale)=>localePath(language,localizedPaths?.[language]??basePath);
+const t={home};
+const org=SITE_URL+'/#organization';
+const defaultLocale=availableLocales.includes('pl')?'pl':(availableLocales[0]??locale);
+const works=publicWorks(data);
+const work=works.find(item=>basePath==='/portfolio/'+item.id+'/');
+const photo=work||(basePath==='/'?works.find(item=>item.id===data.home.heroId):undefined);
+const socialImage=photo?{url:new URL(photo.image,SITE_URL).href,width:photo.width,height:photo.height,alt:photo.title}:{url:SITE_URL+'/brand/klim-logo.jpg',width:1536,height:1536,alt:data.business.name};
+const service=data.services.find(item=>basePath==='/services/'+item.slug+'/');
+const structuredData={'@context':'https://schema.org','@graph':[
+  {'@type':'Organization','@id':org,name:data.business.name,alternateName:'Klim-Lux',url:SITE_URL+'/pl/',logo:{'@type':'ImageObject',url:SITE_URL+'/brand/klim-logo.jpg',width:1536,height:1536},email:data.business.email,telephone:data.business.phone},
+  {'@type':'WebSite','@id':SITE_URL+'/#website',url:SITE_URL+'/pl/',name:data.business.name,inLanguage:LOCALES,publisher:{'@id':org}},
+  {'@type':'WebPage','@id':canonical+'#webpage',url:canonical,name:title,description,inLanguage:locale,isPartOf:{'@id':SITE_URL+'/#website'},...(data.seoUpdatedAt[canonical]?{dateModified:data.seoUpdatedAt[canonical]}:{}),primaryImageOfPage:{'@type':'ImageObject',url:socialImage.url,width:socialImage.width,height:socialImage.height}},
+  ...(article?[article]:[]),
+  ...(service?[{'@type':'Service','@id':canonical+'#service',url:canonical,name:service.title,description:service.seoDescription,serviceType:service.title,provider:{'@id':org},areaServed:{'@type':'City',name:data.business.city}}]:[]),
+  ...(crumbs.length?[{'@type':'BreadcrumbList',itemListElement:[{name:t.home,href:href('/')},...crumbs].map((c,i)=>({'@type':'ListItem',position:i+1,name:c.name,item:c.href?new URL(c.href,SITE_URL).href:canonical}))}]:[]),
+]};
+---
+  <meta name="theme-color" content="#000000"/><meta name="description" content={description}/>
+  <meta name="robots" content={admin||storageError?'noindex, nofollow':noindex?'noindex, follow':'index, follow, max-image-preview:large'}/><title>{title}</title>
+  {!noindex && <><link rel="canonical" href={canonical}/>{availableLocales.map(l=><link rel="alternate" hreflang={HREFLANG[l]} href={SITE_URL+alternatePath(l)}/>)}<link rel="alternate" hreflang="x-default" href={SITE_URL+alternatePath(defaultLocale)}/></>}
+  <meta property="og:type" content={article?'article':'website'}/><meta property="og:locale" content={OG_LOCALE[locale]}/>{!admin&&availableLocales.filter(l=>l!==locale).map(l=><meta property="og:locale:alternate" content={OG_LOCALE[l]}/>)}<meta property="og:site_name" content={data.business.name}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/>
+  {!admin&&<><meta property="og:image" content={socialImage.url}/><meta property="og:image:width" content={String(socialImage.width)}/><meta property="og:image:height" content={String(socialImage.height)}/><meta property="og:image:alt" content={socialImage.alt}/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/><meta name="twitter:image" content={socialImage.url}/><meta name="twitter:image:alt" content={socialImage.alt}/></>}
+  {!noindex && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g,'\\u003c')}/>}

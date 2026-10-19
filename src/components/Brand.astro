@@ -1,0 +1,8 @@
+---
+interface Props { href: string; label: string; footer?: boolean; }
+const { href, label, footer = false } = Astro.props;
+---
+<svg width="0" height="0" aria-hidden="true" class="crest-mask"><defs><clipPath id={footer?'crest-footer':'crest-header'} clipPathUnits="objectBoundingBox"><path d="M .5 .086 C .53 .16 .57 .181 .676 .178 L .682 .222 Q .703 .244 .743 .247 L .743 .76 Q .701 .769 .69 .813 Q .565 .815 .5 .915 Q .435 .815 .31 .813 Q .299 .769 .257 .76 L .257 .247 Q .297 .244 .318 .222 L .324 .178 C .43 .181 .47 .16 .5 .086 Z"/></clipPath></defs></svg>
+<a class:list={['brand', footer && 'brand-footer']} href={href} aria-label={label}>
+  <img class="brand-logo" style={`clip-path:url(#${footer?'crest-footer':'crest-header'})`} src="/brand/klim-logo-384.webp" srcset="/brand/klim-logo-384.webp 384w, /brand/klim-logo-768.webp 768w" sizes="(max-width: 580px) 174px, 224px" width="1536" height="1536" alt="Klim &amp; Co." loading={footer ? 'lazy' : 'eager'} decoding="async"/>
+</a>

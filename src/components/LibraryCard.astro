@@ -1,0 +1,10 @@
+---
+import { PUBLICATION_LANGUAGE_NAMES } from '../data/library';
+import {canHostLibraryFile,libraryDescription,type LibraryEntry} from '../data/library';
+import {LIBRARY_UI} from '../i18n/library';
+import {LANGUAGE_NAMES,localePath} from '../i18n/locales';
+const {item}=Astro.props as {item:LibraryEntry};
+const locale=Astro.locals.locale,t=LIBRARY_UI[locale],href=localePath(locale,'/library/'+item.id+'/');
+const status=item.fileId&&canHostLibraryFile(item)?t.localFile:item.externalDownloadUrl?t.externalFile:t.catalogue;
+---
+<article class="book-card"><a class="book-spine" href={href} aria-label={t.details+': '+item.title}><span class="book-language" lang={item.language}>{PUBLICATION_LANGUAGE_NAMES[item.language]}</span><span class="book-ornament" aria-hidden="true">✦</span><h2 lang={item.language}>{item.title}</h2><p>{item.author}</p><span>{item.year||'Klim & Co'}</span></a><div class="book-card-copy"><p class="eyebrow">{t.categories[item.category]} · {t.kinds[item.kind]}</p><p>{libraryDescription(item,locale)}</p><div class="book-card-bottom"><span class="book-availability">{status}</span><a class="text-link" href={href}>{t.details} <span aria-hidden="true">↗</span></a></div></div></article>

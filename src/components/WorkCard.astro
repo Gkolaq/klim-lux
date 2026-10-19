@@ -1,0 +1,11 @@
+---
+import type { Work } from '../data/content';
+import { UI } from '../i18n/ui';
+import { localePath } from '../i18n/locales';
+import {photoStyle} from './photo-style';
+const locale=Astro.locals.locale,t=UI[locale],href=(path:string)=>localePath(locale,path);
+interface Props { work:Work; eager?:boolean; }
+const {work,eager=false}=Astro.props;
+const srcset=/^\d+$/.test(work.id)&&work.width>360?`/images/responsive/${work.id}-360.webp 360w, ${work.thumbnail} ${Math.min(720,work.width)}w`:undefined;
+---
+<article class="work-card"><a href={href('/portfolio/'+work.id+'/')}><span class="work-image"><img class="photo-edge" style={photoStyle(work,4/3)} src={work.thumbnail} srcset={srcset} sizes="(max-width: 580px) 92vw, (max-width: 1100px) 44vw, 29vw" alt={work.title} loading={eager?'eager':'lazy'} decoding="async" width={work.width} height={work.height}/></span><span class="work-caption"><small>{t.categories[work.category]}</small><strong>{work.title}</strong><span>{work.date||t.archiveDate}</span></span></a></article>

@@ -1,0 +1,26 @@
+---
+import { UI } from '../i18n/ui';
+import { localePath } from '../i18n/locales';
+const locale=Astro.locals.locale,t=UI[locale],href=(path:string)=>localePath(locale,path);
+import Layout from '../layouts/Layout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import WorkCard from '../components/WorkCard.astro';
+import ContactBand from '../components/ContactBand.astro';
+import {articlesForLocale,articlePath} from '../data/articles';
+import {publicWorks} from '../data/content';
+import {PREPARATION_HEADINGS} from '../data/service-preparation';
+import {relatedServices} from '../data/service-links';
+const data=Astro.locals.content,service=data.services.find(s=>s.slug===Astro.props.slug)!;
+const guidance=articlesForLocale(locale)[0];
+const works=publicWorks(data).filter(w=>w.category===service.category).slice(0,6);
+const related=relatedServices(data.services,service.slug);
+---
+<Layout title={service.seoTitle} description={service.seoDescription} crumbs={[{name:t.services,href:href('/services/')},{name:service.title}]}>
+  <PageIntro page={service} eyebrow={t.serviceIntro}/>
+  <section class="detail-copy wrap"><div><h2>{t.canChange}</h2><p class="prose">{service.body}</p></div><div><h2>{t.consider}</h2><p class="prose">{service.detail}</p><a class="text-link" href={href('/materials/')}>{t.seeMaterials}</a></div></section>
+  {service.preparation && <section class="copy-section wrap"><h2>{PREPARATION_HEADINGS[locale]}</h2><p class="prose">{service.preparation}</p></section>}
+  {guidance && ['upholstery','restoration'].includes(service.slug) && <section class="copy-section wrap"><h2>{t.practicalAdvice}</h2><a class="text-link" href={articlePath(guidance)}>{guidance.title} →</a></section>}
+  <section class="section wrap"><div class="section-heading"><h2>{t.fromArchive}</h2><a class="text-link" href={href('/portfolio/')+'?category='+service.category}>{t.topicWorks}</a></div><div class="work-grid">{works.map(w=><WorkCard work={w}/>)}</div></section>
+  {related.length>0 && <section class="copy-section wrap" aria-labelledby="related-services-heading" data-related-services><h2 id="related-services-heading">{t.relatedServices}</h2>{related.map(item=><p class="prose"><a class="text-link" href={href('/services/'+item.slug+'/')}>{item.title} →</a><br/>{item.lead}</p>)}</section>}
+  <ContactBand/>
+</Layout>

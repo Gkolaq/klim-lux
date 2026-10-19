@@ -1,0 +1,17 @@
+---
+import { UI } from '../i18n/ui';
+import { localePath } from '../i18n/locales';
+const locale=Astro.locals.locale,t=UI[locale],href=(path:string)=>localePath(locale,path);
+import Layout from '../layouts/Layout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import ContactBand from '../components/ContactBand.astro';
+import {pageCopy} from '../data/content';
+import {articlesForLocale,articlePath,ARTICLE_UI} from '../data/articles';
+const data=Astro.locals.content,page=pageCopy(data,'materials');
+---
+<Layout title={page.seoTitle} description={page.seoDescription} crumbs={[{name:t.materials}]}>
+  <PageIntro page={page} eyebrow={t.materialsIntro}/>
+  <section class="material-grid wrap">{data.materials.map((m,i)=><article class="material-card"><span class="number">{String(i+1).padStart(2,'0')}</span><h2>{m.name}</h2><p>{m.text}</p></article>)}</section>
+  <section class="copy-section wrap"><p class="eyebrow">{t.materialSelection}</p><h2>{t.materialCompare}</h2><p class="prose">{page.body}</p><a class="text-link" href={href('/portfolio/')}>{t.materialsWorks}</a></section>
+  <section class="copy-section wrap" aria-labelledby="author-articles"><h2 id="author-articles">{ARTICLE_UI[locale].heading}</h2>{articlesForLocale(locale).map(article=><article><h3><a class="text-link" href={articlePath(article)} lang={article.language}>{article.title}</a></h3><p class="prose">{ARTICLE_UI[locale].summary}</p><a class="text-link" href={articlePath(article)}>{ARTICLE_UI[locale].read} →</a></article>)}</section><ContactBand/>
+</Layout>

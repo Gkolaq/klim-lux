@@ -1,0 +1,6 @@
+---
+import {UI} from '../i18n/ui';
+import {localePath} from '../i18n/locales';
+const locale=Astro.locals.locale,t=UI[locale];
+---
+<section class="contact-band wrap"><div><p class="eyebrow">{t.workshopLabel}</p><h2>{t.contactBandTitle}</h2><p>{t.contactBandText}</p></div><a class="button button-gold" href={localePath(locale,'/contacts/')}>{t.contactBandAction}</a></section>

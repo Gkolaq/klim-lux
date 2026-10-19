@@ -1,0 +1,24 @@
+---
+import { UI,photoCount } from '../i18n/ui';
+import { localePath } from '../i18n/locales';
+const locale=Astro.locals.locale,t=UI[locale],href=(path:string)=>localePath(locale,path);
+import Layout from '../layouts/Layout.astro';
+import {LIBRARY_UI} from '../i18n/library';
+import WorkCard from '../components/WorkCard.astro';
+import {photoStyle} from '../components/photo-style';
+import ContactBand from '../components/ContactBand.astro';
+import { publicWorks } from '../data/content';
+const data=Astro.locals.content;
+const works=publicWorks(data),hero=works.find(w=>w.id===data.home.heroId)||works[0];
+const featured=works.filter(w=>w.featured).slice(0,6),selection=featured.length?featured:works.slice(0,6);
+const heroImage=hero?.thumbnail;
+const heroSources=hero&&/^\d+$/.test(hero.id)?`/images/responsive/${hero.id}-360.webp 360w, ${hero.thumbnail} ${Math.min(720,hero.width)}w, ${hero.image} ${hero.width}w`:undefined;
+---
+<Layout>
+  <section class="hero wrap"><div class="hero-copy"><p class="eyebrow">KLIM &amp; CO / {data.business.city}</p><h1>{data.home.title}</h1><p class="lead">{data.home.lead}</p><div class="hero-actions"><a class="button button-gold" href={href('/portfolio/')}>{t.ourWorks}</a><a class="button button-outline" href={href('/services/')}>{t.workshopServices}</a></div><p class="hero-note">{data.home.note}</p></div>{hero && <figure class="hero-photo"><img class="photo-edge" style={photoStyle(hero)} src={heroImage} srcset={heroSources} sizes="(max-width: 339px) 69vw, (max-width: 1100px) 43vw, 420px" width={hero.width} height={hero.height} alt={hero.title} fetchpriority="high" decoding="async"/><figcaption><span>{t.archiveLabel}</span><a href={href('/portfolio/'+ hero.id+'/')}>{hero.title}</a></figcaption></figure>}</section>
+  <section class="section wrap"><div class="section-heading"><div><p class="eyebrow">01 / {t.servicesLabel}</p><h2>{t.newLife}</h2></div><a class="text-link" href={href('/services/')}>{t.allServices}</a></div><div class="service-grid">{data.services.map((s,i)=><article class="service-card"><span class="number">0{i+1}</span><h3><a href={href('/services/'+ s.slug+'/')}>{s.title}</a></h3><p>{s.body}</p><a class="text-link" href={href('/services/'+ s.slug+'/')}>{t.details}</a></article>)}</div></section>
+  <section class="section wrap"><div class="section-heading"><div><p class="eyebrow">02 / {t.portfolio}</p><h2>{t.shapes}</h2></div><p>{t.realPhotos}</p></div><div class="work-grid">{selection.map(w=><WorkCard work={w}/>)}</div><div class="section-end"><a class="button button-outline" href={href('/portfolio/')}>{t.allArchive}</a><span>{photoCount(locale,works.length)}</span></div></section>
+  <section class="workshop-teaser wrap"><div><p class="eyebrow">03 / {t.workshop}</p><h2>{t.personal}</h2><p>{data.pages.find(p=>p.slug==='workshop')?.lead}</p><a class="text-link" href={href('/workshop/')}>{t.aboutProcess}</a></div><div class="materials-teaser"><span class="eyebrow">{t.materials}</span><p>{t.materialTeaser}</p><a class="text-link" href={href('/materials/')}>{t.fabrics}</a></div></section>
+  <section class="library-teaser wrap"><div><p class="eyebrow">04 / {LIBRARY_UI[locale].nav}</p><h2>{LIBRARY_UI[locale].teaser}</h2><p>{LIBRARY_UI[locale].teaserText}</p></div><a class="button button-outline" href={href('/library/')}>{LIBRARY_UI[locale].back} ↗</a></section>
+  <ContactBand/>
+</Layout>

@@ -1,13 +1,46 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <title><slot name="title" /></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
-    <header><h1>Klim Lux</h1></header>
-    <main><slot /></main>
-    <footer>© 2025 Klim Lux</footer>
-  </body>
-</html>
+---
+import '../styles/site.css';
+import '../styles/enhancements.css';
+import '../styles/theme.css';
+import SeoHead from '../components/SeoHead.astro';
+import PageOrnament from '../components/PageOrnament.astro';
+import '../styles/ornament.css';
+import '../styles/visual-refinements.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import AnalyticsConsent from '../components/AnalyticsConsent.astro';
+import { env } from 'cloudflare:workers';
+import { publicAnalyticsId } from '../config/analytics';
+import { canonicalPath } from '../seo/pages';
+import { SITE_URL } from '../config/site';
+import { DEFAULT_CONTENT, localizedContent } from '../data/content';
+import { UI } from '../i18n/ui';
+import { LIBRARY_UI } from '../i18n/library';
+import { LOCALES, LANGUAGE_NAMES, HREFLANG, OG_LOCALE, localePath, pathWithoutLocale, type Locale } from '../i18n/locales';
+interface Props { title?:string; description?:string; crumbs?:{name:string;href?:string}[]; noindex?:boolean; admin?:boolean; availableLocales?:readonly Locale[]; languageFallbackPath?:string; localizedPaths?:Partial<Record<Locale,string>>; pagination?:number; article?:Record<string,unknown>; }
+const {admin=false,noindex=false,crumbs=[],availableLocales=LOCALES,languageFallbackPath='/',localizedPaths,pagination=1,article}=Astro.props;
+const locale=admin?'ru':Astro.locals.locale, t=UI[locale];
+const data=(admin?Astro.locals.snapshot?.content:Astro.locals.content) ?? localizedContent(DEFAULT_CONTENT,locale);
+const {title=data.home.seoTitle,description=data.home.seoDescription}=Astro.props;
+const path=Astro.url.pathname,basePath=pathWithoutLocale(path),canonical=new URL(canonicalPath(path,pagination),SITE_URL).href;
+const href=(p:string)=>localePath(locale,p);
+const nav=[['/services/',t.services],['/portfolio/',t.portfolio],['/library/',LIBRARY_UI[locale].nav],['/materials/',t.materials],['/workshop/',t.workshop],['/contacts/',t.contacts]];
+const languageLink=(language:Locale)=>localePath(language,localizedPaths?.[language]??(availableLocales.includes(language)?basePath:languageFallbackPath))+Astro.url.search;
+const analyticsId=publicAnalyticsId(env.GA4_MEASUREMENT_ID,Astro.url.hostname,admin||Astro.response.status!==200||!!Astro.locals.storageError);
+---
+<!doctype html><html lang={locale}><head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <SeoHead {availableLocales} {localizedPaths} {article} {data} {locale} {title} {description} {canonical} basePath={canonicalPath(basePath,pagination)} {crumbs} {noindex} {admin} home={t.home} storageError={!!Astro.locals.storageError}/>
+  <link rel="icon" type="image/png" sizes="192x192" href="/brand/klim-logo-192.png"/><link rel="apple-touch-icon" sizes="180x180" href="/brand/klim-logo-180.png"/><link rel="preload" href="/fonts/editorial.woff2" as="font" type="font/woff2" crossorigin/>
+</head><body class:list={[admin&&'admin-body']}>
+  {!admin&&<PageOrnament/>}
+  <a class="skip-link" href="#main">{t.skip}</a>
+  <SiteHeader {data} {t} {locale} {nav} {basePath}/>
+  {!admin&&<nav class="language-switch wrap" aria-label={t.language}>{LOCALES.map(l=><a href={languageLink(l)} lang={l} hreflang={HREFLANG[l]} aria-current={l===locale?'true':undefined}>{LANGUAGE_NAMES[l]}</a>)}</nav>}
+  {Astro.locals.storageError&&<p class="storage-banner" role="alert">{t.unavailable}</p>}
+  {crumbs.length>0&&<nav class="breadcrumbs wrap" aria-label={t.breadcrumbs}><a href={href('/')}>{t.home}</a>{crumbs.map(c=><><span aria-hidden="true">/</span>{c.href?<a href={c.href}>{c.name}</a>:<span aria-current="page">{c.name}</span>}</>)}</nav>}
+  <main id="main" tabindex="-1"><slot/></main>
+  {!admin&&<SiteFooter {data} {t} {locale} {nav} {basePath} analyticsEnabled={!!analyticsId}/>}
+  {analyticsId&&<AnalyticsConsent measurementId={analyticsId} {locale}/>}
+  <script>import '../scripts/navigation';</script>
+</body></html>

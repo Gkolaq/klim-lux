@@ -1,0 +1,24 @@
+---
+import { PUBLICATION_LANGUAGE_NAMES } from '../data/library';
+import Layout from '../layouts/Layout.astro';
+import {publicLibrary,libraryDescription,canHostLibraryFile} from '../data/library';
+import {LIBRARY_UI} from '../i18n/library';
+import {LANGUAGE_NAMES,localePath} from '../i18n/locales';
+import {SITE_URL} from '../config/site';
+const locale=Astro.locals.locale,t=LIBRARY_UI[locale],href=(p:string)=>localePath(locale,p);
+const all=publicLibrary(Astro.locals.content),item=all.find(item=>item.id===Astro.props.id)!;
+const original=all.find(book=>book.id===item.translationOf),translations=all.filter(book=>book.translationOf===item.id);
+const description=libraryDescription(item,locale),download=item.fileId&&canHostLibraryFile(item)?'/library-files/'+item.fileId+'/':'';
+const editionTitle=item.title+(item.year?' · '+item.year:''),seoTitle=(editionTitle.length>47?editionTitle.slice(0,44)+'…':editionTitle)+' | Klim & Co';
+const structuredData={'@context':'https://schema.org','@type':item.kind==='book'?'Book':'CreativeWork',name:item.title,inLanguage:item.language,author:{name:item.author},...(/^\d{4}$/.test(item.year)?{datePublished:item.year}:{}),description,url:SITE_URL+href('/library/'+item.id+'/'),...(item.sourceUrl?{sameAs:item.sourceUrl}:{}),...(download?{encoding:{'@type':'MediaObject',contentUrl:SITE_URL+download,encodingFormat:'application/pdf'}}:{})};
+---
+<Layout title={seoTitle} description={(description.length>160?description.slice(0,157)+'…':description)||t.description} crumbs={[{name:t.nav,href:href('/library/')},{name:item.title}]}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g,'\\u003c')}/>
+  <article class="book-detail wrap"><div class="book-detail-cover book-spine"><span class="book-language">{PUBLICATION_LANGUAGE_NAMES[item.language]}</span><span class="book-ornament" aria-hidden="true">✦</span><h2 lang={item.language}>{item.title}</h2><p>{item.author}</p><span>{item.year||'Klim & Co'}</span></div><div class="book-detail-content"><p class="eyebrow">{t.kinds[item.kind]} / {t.categories[item.category]}</p><h1 lang={item.language}>{item.title}</h1><p class="lead">{description}</p>
+    <dl class="book-metadata"><div><dt>{t.author}</dt><dd>{item.author}</dd></div>{item.publisher&&<div><dt>{t.publisher}</dt><dd>{item.publisher}</dd></div>}{item.year&&<div><dt>{t.year}</dt><dd>{item.year}</dd></div>}<div><dt>{t.language}</dt><dd>{PUBLICATION_LANGUAGE_NAMES[item.language]}</dd></div><div><dt>{t.rights}</dt><dd>{t.rightsLabels[item.rights]}{item.rightsNote&&<p>{item.rightsNote}</p>}</dd></div>{item.translator&&<div><dt>{t.translator}</dt><dd>{item.translator}</dd></div>}</dl>
+    <div class="book-actions">{download&&<a class="button button-gold" href={download}>{t.download} <span aria-hidden="true">↓</span></a>}{item.externalDownloadUrl&&<a class="button button-outline" href={item.externalDownloadUrl} target="_blank" rel="noopener noreferrer">{t.external} ↗</a>}{item.sourceUrl&&<a class="text-link" href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{t.source} ↗</a>}</div>
+    {original&&<p class="book-relation">{t.original}: <a href={href('/library/'+original.id+'/')} lang={original.language}>{original.title} — {LANGUAGE_NAMES[original.language]}</a></p>}
+    {translations.length>0&&<section class="book-translations"><h2>{t.translations}</h2><ul>{translations.map(book=><li><a href={href('/library/'+book.id+'/')} lang={book.language}>{book.title} — {PUBLICATION_LANGUAGE_NAMES[book.language]}</a></li>)}</ul></section>}
+    <a class="text-link" href={href('/library/')}>← {t.back}</a>
+  </div></article><aside class="library-note wrap"><p>{t.note}</p></aside>
+</Layout>

@@ -1,0 +1,6 @@
+---
+import type { PageCopy } from '../data/content';
+interface Props { page:PageCopy; eyebrow:string; }
+const {page,eyebrow}=Astro.props;
+---
+<header class="page-intro wrap"><p class="eyebrow">{eyebrow}</p><h1>{page.title}</h1><p class="lead">{page.lead}</p></header>

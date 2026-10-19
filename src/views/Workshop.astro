@@ -1,0 +1,17 @@
+---
+import { UI } from '../i18n/ui';
+import { localePath } from '../i18n/locales';
+const locale=Astro.locals.locale,t=UI[locale],href=(path:string)=>localePath(locale,path);
+import Layout from '../layouts/Layout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import ContactBand from '../components/ContactBand.astro';
+import {photoStyle} from '../components/photo-style';
+import {pageCopy,publicWorks} from '../data/content';
+const data=Astro.locals.content,page=pageCopy(data,'workshop'),image=publicWorks(data).find(w=>w.category==='covers');
+---
+<Layout title={page.seoTitle} description={page.seoDescription} crumbs={[{name:t.workshop}]}>
+  <PageIntro page={page} eyebrow={data.business.owner+' / KLIM & CO'}/>
+  <section class="about-grid wrap"><div class="prose">{page.body}</div>{image&&<figure><span class="workshop-image"><img class="photo-edge" style={photoStyle(image,4/3)} src={image.thumbnail} width={image.width} height={image.height} loading="lazy" alt={image.title}/></span><figcaption>{t.fromArchive} · {image.title}</figcaption></figure>}</section>
+  <section class="section wrap"><div class="section-heading"><div><p class="eyebrow">{t.processLabel}</p><h2>{t.conversationResult}</h2></div></div><ol class="process-grid">{data.process.map((p,i)=><li><span class="number">0{i+1}</span><h3>{p.title}</h3><p>{p.text}</p></li>)}</ol></section>
+  <section class="archive-band wrap"><h2>{t.archiveHistory}</h2><p>{t.archiveHistoryBody}</p><a class="text-link" href="https://meb.ucoz.ru/" target="_blank" rel="noopener noreferrer">{t.openOriginal}</a></section><ContactBand/>
+</Layout>

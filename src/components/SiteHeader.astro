@@ -1,0 +1,19 @@
+---
+import type {Content} from '../data/content';
+import type {Locale} from '../i18n/locales';
+import {UI} from '../i18n/ui';
+import Brand from './Brand.astro';
+import {phoneHref} from '../data/content';
+import {localePath} from '../i18n/locales';
+interface Props {data:Content;t:typeof UI[Locale];locale:Locale;nav:string[][];basePath:string;}
+const {data,t,locale,nav,basePath}=Astro.props;
+const href=(p:string)=>localePath(locale,p);
+const contactName=data.business.owner;
+---
+<header class="header">
+ <div class="header-identity"><Brand href={href('/')} label={'Klim & Co — '+t.home}/><div class="header-copy"><a class="header-name" href={href('/')}>Klim &amp; Co</a><p>{t.workshopLabel}<br/>{data.business.city}</p></div><div class="header-contact"><a class="header-phone" href={phoneHref(data.business.phone)}><span aria-hidden="true">☎</span> {data.business.phone}</a><span class="header-owner">{contactName}</span></div></div>
+ <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">{t.menu}</button>
+ <nav class="desktop-nav" aria-label={t.mainNav}><a href={href('/')} aria-current={basePath==='/'?'page':undefined}>{t.home}</a>{nav.map(([p,label])=><a href={href(p)} aria-current={basePath.startsWith(p)?'page':undefined}>{label}</a>)}</nav>
+<nav id="mobile-nav" class="mobile-nav" aria-label={t.mobileNav} hidden><a href={href('/')} aria-current={basePath==='/'?'page':undefined}>{t.home}</a>{nav.map(([p,label])=><a href={href(p)} aria-current={basePath.startsWith(p)?'page':undefined}>{label}</a>)}</nav>
+
+</header>

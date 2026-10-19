@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1791111415094,
+      "tag": "0000_cynical_zaran",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1791698643498,
+      "tag": "0001_chunky_deathbird",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791716299406,
+      "tag": "0002_happy_christian_walker",
+      "breakpoints": true
+    }
+  ]
+}

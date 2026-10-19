@@ -1,0 +1,56 @@
+---
+// Keep the accepted leaf shapes; finite top branches and a continuous side vine.
+const topVines = [
+  {
+    id: 'wide', width: 960, className: 'ornament-horizontal',
+    stem: 'M20 36 C4 42 5 16 24 18 C45 20 35 48 22 35 C72 10 99 58 153 29 S254 9 309 31 S408 58 461 31 S561 7 614 30 S713 57 769 31 S855 9 895 29 C931 50 956 26 940 14 C928 5 917 17 926 25 M20 42 C66 66 104 8 153 36 S255 61 309 37 S410 8 461 37 S562 61 614 37 S715 8 769 37 S855 61 895 35',
+    leaves: ['translate(62 28) rotate(30)', 'translate(202 31) rotate(-28) scale(.85)', 'translate(358 30) rotate(37)', 'translate(515 33) rotate(-28) scale(.85)', 'translate(685 29) rotate(30)', 'translate(815 32) rotate(-28) scale(.85)'],
+    runes: 'M288 78 V52 M288 65 L277 53 M288 65 L299 53 M620 85 V57 L636 65 L620 72 L636 79 Z',
+  },
+  {
+    id: 'compact', width: 360, className: 'ornament-horizontal ornament-horizontal-compact',
+    stem: 'M20 36 C4 42 5 16 24 18 C45 20 35 48 22 35 C72 10 99 58 153 29 S254 9 309 31 C335 47 353 26 342 17 C330 7 319 18 328 25 M20 42 C66 66 104 8 153 36 S255 61 309 37',
+    leaves: ['translate(42 28) rotate(30)', 'translate(120 30) rotate(-28) scale(.85)', 'translate(226 30) rotate(37)'],
+    runes: 'M91 86 V60 M91 73 L80 61 M91 73 L102 61 M191 84 V56 L207 64 L191 71 L207 78 Z',
+  },
+];
+---
+<div class="page-ornament" aria-hidden="true">
+  <svg class="ornament-vertical" width="80" height="100%" xmlns="http://www.w3.org/2000/svg" focusable="false">
+    <defs>
+      <g id="klim-leaf">
+        <path class="ornament-leaf" d="M0 0 C4 -25 19 -43 38 -47 C38 -24 23 -3 0 0Z"/>
+        <path class="ornament-veins" d="M0 0 Q19 -19 38 -47 M12 -14 L12 -31 M22 -27 L31 -28"/>
+      </g>
+      <path id="klim-side-stems" d="M28 0 C52 60 52 120 28 180 S4 300 28 360 M34 0 C10 60 10 120 34 180 S58 300 34 360"/>
+      <pattern id="klim-vine" width="80" height="360" patternUnits="userSpaceOnUse" patternTransform="translate(0 48)">
+        <use class="ornament-stem-depth" href="#klim-side-stems"/>
+        <use class="ornament-stem" href="#klim-side-stems"/>
+        <use href="#klim-leaf" transform="translate(16 88) rotate(18) scale(.8)"/>
+        <use href="#klim-leaf" transform="translate(34 177) rotate(-68) scale(.75)"/>
+        <use href="#klim-leaf" transform="translate(9 265) rotate(24) scale(.75)"/>
+        <use href="#klim-leaf" transform="translate(42 338) rotate(-76) scale(.7)"/>
+        <path class="ornament-tendril" d="M45 110 Q68 108 68 93 Q68 81 58 83 Q52 85 57 91 M16 284 Q5 289 6 302 Q8 310 15 304"/>
+        <!-- Decorative outlines of Algiz and Berkana from the Elder Futhark. -->
+        <path class="ornament-rune" d="M59 213 V181 M59 194 L49 182 M59 194 L69 182 M55 321 V290 L69 298 L55 305 L69 313 Z"/>
+      </pattern>
+      <path id="klim-vine-crown" d="M28 48 C43 27 23 6 11 20 C2 31 10 45 20 40 C30 35 21 24 16 29 M34 48 C47 35 42 15 27 14"/>
+    </defs>
+    <use class="ornament-stem-depth" href="#klim-vine-crown"/>
+    <use class="ornament-stem" href="#klim-vine-crown"/>
+    <rect y="48" width="80" height="100%" fill="url(#klim-vine)"/>
+  </svg>
+  {topVines.map(vine => <svg class={vine.className} viewBox={`0 0 ${vine.width} 120`} preserveAspectRatio="xMinYMin meet" width="100%" height="120" xmlns="http://www.w3.org/2000/svg" focusable="false">
+    <defs>
+      <path id={`klim-top-stems-${vine.id}`} d={vine.stem} vector-effect="non-scaling-stroke"/>
+      <g id={`klim-top-leaf-${vine.id}`}>
+        <path class="ornament-leaf" d="M0 0 C9 21 29 31 48 26 C36 7 17 -3 0 0Z"/>
+        <path class="ornament-veins" d="M0 0 Q24 14 48 26 M16 9 L24 3 M28 16 L30 24"/>
+      </g>
+    </defs>
+    <use class="ornament-stem-depth" href={`#klim-top-stems-${vine.id}`}/>
+    <use class="ornament-stem" href={`#klim-top-stems-${vine.id}`}/>
+    {vine.leaves.map(transform => <use href={`#klim-top-leaf-${vine.id}`} {transform}/>)}
+    <path class="ornament-rune" d={vine.runes} vector-effect="non-scaling-stroke"/>
+  </svg>)}
+</div>
