@@ -272,8 +272,19 @@ test('production Worker: routes, editor access, durable changes, conflicts, uplo
       en:{title:'Wersalka sofa with a birch frame and wooden details',description:'Description of the new work.'},
     };
     snapshot.content.works.push({...media,...uploadText.ru,date:'',category:'custom',source:'',visible:true,featured:false,order:0});
-    for(const locale of ['pl','en'])snapshot.content.translations[locale].works[media.id]=uploadText[locale];
     const uploadSaved=await write(snapshot);assert.equal(uploadSaved.status,200);snapshot=await uploadSaved.json();
+    assert.ok(snapshot.content.translations.en.works[media.id].title.startsWith('Work no. '),'ordinary upload keeps its automatic CMS placeholder');
+    const fallbackTitles={pl:'Meble na zamówienie',en:'Made to order'};
+    for(const locale of ['pl','en']){
+      const page=await (await fetch('/'+locale+'/portfolio/'+media.id+'/')).text();
+      assert.equal(page.match(/<title>(.*?)<\/title>/s)?.[1],fallbackTitles[locale]+' | Klim &amp; Co','automatic UUID placeholder gets a localized category title');
+      const description=page.match(/<meta name="description" content="([^"]*)"/)?.[1];assert.ok(description);assert.ok(!description.includes(media.id));
+      assert.ok(page.includes('<h1>'+fallbackTitles[locale]+'</h1>'),'automatic heading contains no technical ID');
+    }
+    const unchangedUpload=await (await fetch('/api/content/',{headers:owner})).json();
+    for(const locale of ['pl','en'])assert.equal(unchangedUpload.content.translations[locale].works[media.id].title,snapshot.content.translations[locale].works[media.id].title,'rendering does not rewrite the CMS placeholder');
+    for(const locale of ['pl','en'])snapshot.content.translations[locale].works[media.id]=uploadText[locale];
+    const translatedUpload=await write(snapshot);assert.equal(translatedUpload.status,200);snapshot=await translatedUpload.json();
     for(const locale of locales){
       const path='/'+locale+'/portfolio/'+media.id+'/',response=await fetch(path),page=await response.text();assert.equal(response.status,200);
       assert.equal(page.match(/<title>(.*?)<\/title>/s)?.[1],uploadText[locale].title+' | Klim &amp; Co','uploaded work retains its full localized title');
@@ -281,12 +292,12 @@ test('production Worker: routes, editor access, durable changes, conflicts, uplo
       assert.ok(page.includes('<h1>'+uploadText[locale].title+'</h1>'),'owner heading stays unchanged');
       assert.ok(page.includes('rel="canonical" href="'+origin+path+'"'),'UUID address stays canonical');
       assert.ok(page.includes('src="'+media.image+'"'),'uploaded photograph stays unchanged');
-      assert.ok(!page.match(/<div class="project-heading">(.*?)<\/div>/s)?.[1].includes(media.id),'UUID is absent from visible heading');
+      const heading=page.match(/<div class="project-heading">(.*?)<\/div>/s)?.[1];assert.ok(heading);assert.ok(!heading.includes(media.id),'UUID is absent from visible heading');
     }
     await mf.dispose();mf=new Miniflare(options());
-    const persisted=await (await fetch('/api/content/',{headers:owner})).json();assert.equal(persisted.revision,3);assert.equal(persisted.content.translations.pl.works['300'].title,'Narożnik — zmieniony opis');assert.equal(persisted.content.translations.en.works[media.id].title,uploadText.en.title);assert.equal(persisted.content.works.length,300);assert.equal(persisted.content.works.find(work=>work.id==='302').order,1000,'owner can reorder new photographs');assert.equal(persisted.content.works.find(work=>work.id==='309').order,0);assert.equal((await fetch(media.image)).status,200,'R2 survives restart');
-    persisted.content=original.content;const restored=await write(persisted);assert.equal(restored.status,200);snapshot=await restored.json();assert.equal(snapshot.revision,4);assert.equal((await fetch('/ru/portfolio/301/')).status,200);
-    const list=await (await fetch('/api/history/',{headers:owner})).json();assert.deepEqual(list.map(r=>r.revision),[4,3,2,1]);
+    const persisted=await (await fetch('/api/content/',{headers:owner})).json();assert.equal(persisted.revision,4);assert.equal(persisted.content.translations.pl.works['300'].title,'Narożnik — zmieniony opis');assert.equal(persisted.content.translations.en.works[media.id].title,uploadText.en.title);assert.equal(persisted.content.works.length,300);assert.equal(persisted.content.works.find(work=>work.id==='302').order,1000,'owner can reorder new photographs');assert.equal(persisted.content.works.find(work=>work.id==='309').order,0);assert.equal((await fetch(media.image)).status,200,'R2 survives restart');
+    persisted.content=original.content;const restored=await write(persisted);assert.equal(restored.status,200);snapshot=await restored.json();assert.equal(snapshot.revision,5);assert.equal((await fetch('/ru/portfolio/301/')).status,200);
+    const list=await (await fetch('/api/history/',{headers:owner})).json();assert.deepEqual(list.map(r=>r.revision),[5,4,3,2,1]);
     // The reference library works on every locale, and filters do not create indexable duplicates.
     assert.equal(snapshot.content.library.length,7);
     for(const locale of locales){
