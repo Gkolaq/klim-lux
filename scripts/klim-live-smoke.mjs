@@ -22,7 +22,8 @@ export async function auditSite(base = DEFAULT_BASE, fetchImpl = fetch) {
     const text = await response.text();
     return {response, text};
   };
-  for (const lang of ['pl', 'ru', 'en']) {
+  const locales = ['pl', 'ru', 'en'];
+  for (const lang of locales) {
     try {
       const {response, text} = await request(`/${lang}/`);
       add(`${lang}.http200`, response.status === 200, `HTTP ${response.status}`);
@@ -32,6 +33,23 @@ export async function auditSite(base = DEFAULT_BASE, fetchImpl = fetch) {
       const tagLang = text.match(/<html\b[^>]*\blang\s*=\s*["']([^"']+)["']/i)?.[1];
       add(`${lang}.html-lang`, tagLang === lang || tagLang?.startsWith(lang + '-'), tagLang ?? 'missing lang');
     } catch (e) { add(`${lang}.request`, false, String(e)); }
+  }
+  // Customer conversion gate: read-only GET, never submit, save or disclose customer data.
+  for (const lang of locales) {
+    try {
+      const {response, text} = await request(`/${lang}/contacts/`);
+      add(`${lang}.contact.http200`, response.status === 200, `HTTP ${response.status}`);
+      const formOpen = [...text.matchAll(/<form\b[^>]*>/gi)]
+        .map(m => m[0])
+        .find(tag => /\bid\s*=\s*[\"']contact-form[\"']/i.test(tag));
+      add(`${lang}.contact.form`, !!formOpen, 'Client enquiry form exists');
+      const mode = formOpen?.match(/\bdata-delivery\s*=\s*[\"']([^\"']+)[\"']/i)?.[1];
+      add(`${lang}.contact.server-mode`, mode === 'server', `Mode ${mode ?? 'missing'}`);
+      const formHtml = formOpen && text.slice(text.indexOf(formOpen), text.indexOf('</form>', text.indexOf(formOpen)) + 7);
+      const required = ['name', 'contact', 'message'];
+      const allFields = !!formHtml && required.every(field => new RegExp(`\\bname\\s*=\\s*[\"']${field}[\"']`, 'i').test(formHtml));
+      add(`${lang}.contact.fields`, allFields, 'Required name/contact/message fields present');
+    } catch (e) { add(`${lang}.contact.request`, false, String(e)); }
   }
   try {
     const {response, text} = await request('/robots.txt');
