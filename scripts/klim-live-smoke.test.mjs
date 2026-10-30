@@ -11,6 +11,10 @@ async function fixture(mutator) {
     if (path === '/be/') { res.writeHead(301, {location: '/ru/'}).end(); return; }
     if (path === '/robots.txt') { res.writeHead(200).end('User-agent: *\nDisallow: /admin/\nSitemap: http://127.0.0.1:PORT/sitemap.xml'); return; }
     if (path === '/sitemap.xml') { res.writeHead(200).end('<urlset><url><loc>http://127.0.0.1:PORT/pl/</loc></url><url><loc>http://127.0.0.1:PORT/ru/</loc></url><url><loc>http://127.0.0.1:PORT/en/</loc></url></urlset>'); return; }
+    const contactLang = /^\/(pl|ru|en)\/contacts\/$/.exec(path)?.[1];
+    if (contactLang) {
+      res.writeHead(200).end(`<html lang="${contactLang}"><head><link rel="canonical" href="http://127.0.0.1:PORT/${contactLang}/contacts/"></head><body><form id="contact-form" data-delivery="server"><input name="name"><input name="contact"><textarea name="message"></textarea><button type="submit">Send</button></form></body></html>`); return;
+    }
     const lang = /^\/(pl|ru|en)\/$/.exec(path)?.[1];
     if (lang) { res.writeHead(200).end(`<html lang="${lang}"><head><link rel="canonical" href="http://127.0.0.1:PORT/${lang}/"></head><body>ready</body></html>`); return; }
     res.writeHead(404).end('no');
@@ -43,5 +47,33 @@ test('bad canonical is reported as a failure', async () => {
     };
     const report = await auditSite(url, broken);
     assert.ok(report.checks.some(x => x.id === 'pl.canonical' && x.status === 'FAIL'));
+  });
+});
+
+test('draft mode on contact page is detected as a business-critical failure', async () => {
+  await fixture(async (url, fetchImpl) => {
+    const draftForm = async (target, init) => {
+      const response = await fetchImpl(target, init);
+      if (target.endsWith('/ru/contacts/')) {
+        return {...response, text: async () => (await response.text()).replace('data-delivery="server"', 'data-delivery="draft"')};
+      }
+      return response;
+    };
+    const report = await auditSite(url, draftForm);
+    assert.ok(report.checks.some(x => x.id === 'ru.contact.server-mode' && x.status === 'FAIL'));
+  });
+});
+
+test('missing contact field is detected without submitting a customer request', async () => {
+  await fixture(async (url, fetchImpl) => {
+    const brokenField = async (target, init) => {
+      const response = await fetchImpl(target, init);
+      if (target.endsWith('/en/contacts/')) {
+        return {...response, text: async () => (await response.text()).replace('name="contact"', 'name="missing"')};
+      }
+      return response;
+    };
+    const report = await auditSite(url, brokenField);
+    assert.ok(report.checks.some(x => x.id === 'en.contact.fields' && x.status === 'FAIL'));
   });
 });
