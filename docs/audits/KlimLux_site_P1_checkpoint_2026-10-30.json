@@ -1,0 +1,60 @@
+{
+  "schema": "klim-lux-p1-checkpoint-v1",
+  "checked_at": "2026-10-30",
+  "scope": "main Sites only",
+  "production_url": "https://www.klim-lux.com/",
+  "site_project_id": "appgprj_6ac13fc8d10481918e5df6e700854015",
+  "published_version_last_documented": "v50 (2026-10-28), not re-verified in native Sites",
+  "live_source_commit": "UNKNOWN",
+  "live_contact_form": {
+    "languages": [
+      "pl",
+      "ru",
+      "en"
+    ],
+    "rendered": "verified",
+    "server_delivery_mode": "verified via HTML",
+    "field_names": [
+      "name",
+      "contact",
+      "message"
+    ],
+    "runtime_js_browser": "browser agent checked event listener",
+    "e2e_delivery": "NOT_TESTED"
+  },
+  "resend": {
+    "sender_domain_verified": true,
+    "prior_delivered_dates": [
+      "2026-10-14",
+      "2026-10-25"
+    ],
+    "post_422_2026_10_28": "unattributed; production impact unknown"
+  },
+  "search_console": {
+    "sitemap_last_downloaded": "2026-10-30T00:34:55.847Z",
+    "web_urls": 1005,
+    "image_refs": 900,
+    "warnings": 0,
+    "errors": 0,
+    "period": "2026-09-30/2026-10-27",
+    "clicks": 7,
+    "impressions": 116
+  },
+  "engineering": {
+    "p1_readonly_checks_added": [
+      "contact.http200",
+      "contact.form",
+      "contact.server-mode",
+      "contact.fields"
+    ],
+    "local_test_cases": 4,
+    "local_tests_passed": 4,
+    "site_changed": false,
+    "dns_changed": false
+  },
+  "excluded_work": "all alternate mirrors and migration infrastructure (frozen on owner instruction)",
+  "github_branch": "maintenance/live-smoke-20261030",
+  "github_updated_head": "PENDING",
+  "status": "VERIFIED_READONLY; PRODUCTION_DEPLOYMENT_NOT_PERFORMED",
+  "next": "Open latest native Sites source SHA in Work and integrate tests safely; confirm actual enquiry E2E with controlled owner-authorized test."
+}
