@@ -1,0 +1,40 @@
+{
+  "schema": "klim-lux-technical-state-v2",
+  "created_at_utc": "2026-10-30T04:25:27+00:00",
+  "site_project_id": "appgprj_6ac13fc8d10481918e5df6e700854015",
+  "production_url": "https://www.klim-lux.com/",
+  "last_documented_native_version": 50,
+  "native_version_live_verified_today": false,
+  "published_source_sha": "UNKNOWN",
+  "github": {
+    "repo": "Gkolaq/klim-lux",
+    "main": "87fbd9147837cd7151896015af22c682cb560fb7",
+    "recovery": "e3a2cf9689345aaa5ed909b026f86b7047de7fa6",
+    "transport": "5528b99348ff3e6469b1c181e046344af31ee364",
+    "source_equivalence_to_production": "NOT_VERIFIED"
+  },
+  "public_checks": {
+    "pl_ru_en": "PASS via external html fetch",
+    "sitemap_urls": 1005,
+    "robots": "PASS",
+    "admin_unauthorized": "401",
+    "be_old_language": "redirected to /ru/",
+    "contact_form": "NOT_DETECTED_BY_EXTRACTOR; E2E_UNKNOWN"
+  },
+  "gsc_period": "2026-09-30..2026-10-27",
+  "gsc": {
+    "clicks": 7,
+    "impressions": 116,
+    "ctr_percent": 6.03,
+    "average_position": 12.62
+  },
+  "engineering": {
+    "node_smoke_tests": "PASS 2/2 local mocks",
+    "production_code_changed": false,
+    "production_released": false,
+    "dns_changed": false,
+    "full_latest_source_backed_up": false
+  },
+  "status": "PARTIAL_VERIFIED; BLOCKED_ON_NATIVE_SITE_SOURCE",
+  "next_action": "Get native Site published SHA and exact source snapshot before GitHub / Drive full source synchronization"
+}
